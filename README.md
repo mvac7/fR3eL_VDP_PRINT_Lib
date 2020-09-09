@@ -8,18 +8,16 @@ Format: C Object (SDCC object .rel)
 
 Programming language: C
 
-WEB: ---
- 
 mail: mvac7303b@gmail.com
 
 
 
-## Sorry!: This text is pending correction of the English translation. <<<<<<<<<
+## Sorry!: This text is pending correction of the English translation.
 
 
 
 ## History of versions:
-- v1.1 (9/Sep/2020) <<current version>>
+- v1.1 (9/Sep/2020) <current version>
 - v1   (4/Feb/2016) First version
 
 
@@ -69,10 +67,10 @@ Thanks for Info & help, to:
 
 ## Functions
 
-* unsigned int GetVRAMaddressByPosition(char column, char line) --> It provides the address of the video memory map tiles, from the screen position indicated.
-* void VPRINT(char column, char line, char* text) --> Prints a string in the indicated position.
-* void VPRINTN(char column, char line, char* text, unsigned int length) --> Prints a string in the indicated position.
-* void VPrintString(unsigned int vaddress, char* text) --> Dump the contents of an array of char in a position shown in the video memory.
-* void VPrintNumber(char column, char line, unsigned int value, char length) --> Prints a number at the specified position on the screen.
-* void VPrintNum(unsigned int vaddr, unsigned int value, char length) --> Prints a number at the specified position on the screen.
-* void num2Dec16(unsigned int aNumber, char *address) --> 16-bit Integer to ASCII (by baze)
+* unsigned int **GetVRAMaddressByPosition** (char column, char line) --> It provides the address of the video memory map tiles, from the screen position indicated.
+* void **VPRINT** (char column, char line, char* text) --> Prints a string in the indicated position.
+* void **VPRINTN** (char column, char line, char* text, unsigned int length) --> Prints a string in the indicated position.
+* void **VPrintString** (unsigned int vaddress, char* text) --> Dump the contents of an array of char in a position shown in the video memory.
+* void **VPrintNumber** (char column, char line, unsigned int value, char length) --> Prints a number at the specified position on the screen.
+* void **VPrintNum** (unsigned int vaddr, unsigned int value, char length) --> Prints a number at the specified position on the screen.
+* void **num2Dec16** (unsigned int aNumber, char *address) --> 16-bit Integer to ASCII (by baze)
