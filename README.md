@@ -16,18 +16,18 @@ mail: mvac7303b@gmail.com
 
 
 
-## History of versions:
+## History of versions
 - v1.1 (9/Sep/2020) <current version>
 - v1   (4/Feb/2016) First version
 
 
 
-## Introduction
+## Description
 
 Open Source library with functions to display text strings in the graphic modes of the TMS9918A.
 
 Requires the VDP TMS9918A Library: 
-- for MSXDOS https://github.com/mvac7/SDCC_TMS9918A_Lib
+- for MSX-DOS https://github.com/mvac7/SDCC_TMS9918A_Lib
 - or for MSX ROM https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib
 
 This library does not use any of the MSX BIOS functions, so it is suitable for creating applications for MSXDOS and ROM format.
@@ -35,8 +35,6 @@ This library does not use any of the MSX BIOS functions, so it is suitable for c
 Use them for developing MSX applications using Small Device C Compiler (SDCC) compilator.
 
 It includes an application created to test the library, but it can also be used to learn how to use it.
-
-
 
 
 
