@@ -9,7 +9,6 @@
 ; Public variables in this module
 ;--------------------------------------------------------
 	.globl _CopyToVRAM
-	.globl _VPOKE
 	.globl _CSTATE
 	.globl _GetVRAMaddressByPosition
 	.globl _VPRINT
@@ -51,7 +50,7 @@ _CSTATE::
 ; code
 ;--------------------------------------------------------
 	.area _CODE
-;src\VDP_VPRINT.c:25: unsigned int GetVRAMaddressByPosition(char column, char line)
+;src\VDP_VPRINT.c:32: unsigned int GetVRAMaddressByPosition(char column, char line)
 ;	---------------------------------
 ; Function GetVRAMaddressByPosition
 ; ---------------------------------
@@ -59,7 +58,7 @@ _GetVRAMaddressByPosition::
 	push	ix
 	ld	ix,#0
 	add	ix,sp
-;src\VDP_VPRINT.c:27: return BASE10 + (line*32)+column;
+;src\VDP_VPRINT.c:34: return BASE10 + (line*32)+column;
 	ld	l, 5 (ix)
 	ld	h, #0x00
 	add	hl, hl
@@ -72,15 +71,15 @@ _GetVRAMaddressByPosition::
 	ld	c, 4 (ix)
 	ld	b, #0x00
 	add	hl, bc
-;src\VDP_VPRINT.c:28: }
+;src\VDP_VPRINT.c:35: }
 	pop	ix
 	ret
-;src\VDP_VPRINT.c:39: void VPRINT(char column, char line, char* text)
+;src\VDP_VPRINT.c:47: void VPRINT(char column, char line, char* text)
 ;	---------------------------------
 ; Function VPRINT
 ; ---------------------------------
 _VPRINT::
-;src\VDP_VPRINT.c:41: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
+;src\VDP_VPRINT.c:49: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
 	ld	hl, #3+0
 	add	hl, sp
 	ld	a, (hl)
@@ -93,7 +92,7 @@ _VPRINT::
 	inc	sp
 	call	_GetVRAMaddressByPosition
 	pop	af
-;src\VDP_VPRINT.c:42: VPrintString(vaddr, text);
+;src\VDP_VPRINT.c:50: VPrintString(vaddr, text);
 	ld	iy, #4
 	add	iy, sp
 	ld	c, 0 (iy)
@@ -103,14 +102,14 @@ _VPRINT::
 	call	_VPrintString
 	pop	af
 	pop	af
-;src\VDP_VPRINT.c:43: }
+;src\VDP_VPRINT.c:51: }
 	ret
-;src\VDP_VPRINT.c:55: void VPRINTN(char column, char line, char* text, unsigned int length)
+;src\VDP_VPRINT.c:64: void VPRINTN(char column, char line, char* text, unsigned int length)
 ;	---------------------------------
 ; Function VPRINTN
 ; ---------------------------------
 _VPRINTN::
-;src\VDP_VPRINT.c:57: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
+;src\VDP_VPRINT.c:66: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
 	ld	hl, #3+0
 	add	hl, sp
 	ld	a, (hl)
@@ -123,7 +122,7 @@ _VPRINTN::
 	inc	sp
 	call	_GetVRAMaddressByPosition
 	pop	af
-;src\VDP_VPRINT.c:58: CopyToVRAM((unsigned int) text,vaddr,length);
+;src\VDP_VPRINT.c:67: CopyToVRAM((unsigned int) text, vaddr, length);
 	ld	iy, #4
 	add	iy, sp
 	ld	c, 0 (iy)
@@ -139,51 +138,58 @@ _VPRINTN::
 	ld	hl, #6
 	add	hl, sp
 	ld	sp, hl
-;src\VDP_VPRINT.c:59: }
+;src\VDP_VPRINT.c:68: }
 	ret
-;src\VDP_VPRINT.c:71: void VPrintString(unsigned int vaddr, char* text)
+;src\VDP_VPRINT.c:79: void VPrintString(unsigned int vaddr, char* text)
 ;	---------------------------------
 ; Function VPrintString
 ; ---------------------------------
 _VPrintString::
-	push	ix
-	ld	ix,#0
-	add	ix,sp
-;src\VDP_VPRINT.c:73: while(*(text)) VPOKE(vaddr++,*(text++));
-	ld	c, 6 (ix)
-	ld	b, 7 (ix)
-	ld	e, 4 (ix)
-	ld	d, 5 (ix)
+;src\VDP_VPRINT.c:82: while(text[length]) length++;
+	ld	e, #0x00
 00101$:
-	ld	a, (bc)
+	ld	hl, #4
+	add	hl, sp
+	ld	a, (hl)
+	inc	hl
+	ld	h, (hl)
+	ld	l, a
+	ld	d, #0x00
+	add	hl, de
+	ld	a, (hl)
 	or	a, a
-	jr	Z,00104$
-	ld	h, a
-	inc	bc
-	push	de
-	pop	iy
-	inc	de
-	push	bc
-	push	de
-	push	hl
-	inc	sp
-	push	iy
-	call	_VPOKE
-	pop	af
-	inc	sp
-	pop	de
-	pop	bc
+	jr	Z,00103$
+	inc	e
 	jr	00101$
-00104$:
-;src\VDP_VPRINT.c:74: }
-	pop	ix
+00103$:
+;src\VDP_VPRINT.c:84: CopyToVRAM((unsigned int) text, vaddr, length);
+	ld	d, #0x00
+	ld	hl, #4
+	add	hl, sp
+	ld	c, (hl)
+	inc	hl
+	ld	b, (hl)
+	push	de
+	ld	hl, #4
+	add	hl, sp
+	ld	a, (hl)
+	inc	hl
+	ld	h, (hl)
+	ld	l, a
+	push	hl
+	push	bc
+	call	_CopyToVRAM
+	ld	hl, #6
+	add	hl, sp
+	ld	sp, hl
+;src\VDP_VPRINT.c:85: }
 	ret
-;src\VDP_VPRINT.c:87: void VPrintNumber(char column, char line, unsigned int value, char length)
+;src\VDP_VPRINT.c:99: void VPrintNumber(char column, char line, unsigned int value, char length)
 ;	---------------------------------
 ; Function VPrintNumber
 ; ---------------------------------
 _VPrintNumber::
-;src\VDP_VPRINT.c:89: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
+;src\VDP_VPRINT.c:101: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
 	ld	hl, #3+0
 	add	hl, sp
 	ld	a, (hl)
@@ -198,7 +204,7 @@ _VPrintNumber::
 	pop	af
 	ld	c, l
 	ld	b, h
-;src\VDP_VPRINT.c:91: VPrintNum(vaddr, value, length);
+;src\VDP_VPRINT.c:103: VPrintNum(vaddr, value, length);
 	ld	hl, #6+0
 	add	hl, sp
 	ld	a, (hl)
@@ -216,9 +222,9 @@ _VPrintNumber::
 	pop	af
 	pop	af
 	inc	sp
-;src\VDP_VPRINT.c:92: }
+;src\VDP_VPRINT.c:104: }
 	ret
-;src\VDP_VPRINT.c:103: void VPrintNum(unsigned int vaddr, unsigned int value, char length)
+;src\VDP_VPRINT.c:116: void VPrintNum(unsigned int vaddr, unsigned int value, char length)
 ;	---------------------------------
 ; Function VPrintNum
 ; ---------------------------------
@@ -229,7 +235,7 @@ _VPrintNum::
 	ld	hl, #-6
 	add	hl, sp
 	ld	sp, hl
-;src\VDP_VPRINT.c:106: char text[]="     ";
+;src\VDP_VPRINT.c:119: char text[]="     ";
 	ld	hl, #0
 	add	hl, sp
 	ex	de, hl
@@ -256,7 +262,7 @@ _VPrintNum::
 	ld	hl, #0x0005
 	add	hl, de
 	ld	(hl), #0x00
-;src\VDP_VPRINT.c:108: num2Dec16(value, text); 
+;src\VDP_VPRINT.c:121: num2Dec16(value, text); 
 	ld	c, e
 	ld	b, d
 	push	de
@@ -268,7 +274,7 @@ _VPrintNum::
 	pop	af
 	pop	af
 	pop	de
-;src\VDP_VPRINT.c:111: CopyToVRAM((unsigned int) text + (5-length), vaddr, length);
+;src\VDP_VPRINT.c:124: CopyToVRAM((unsigned int) text + (5-length), vaddr, length);
 	ld	c, 8 (ix)
 	ld	b, #0x00
 	ld	l, 8 (ix)
@@ -289,16 +295,16 @@ _VPrintNum::
 	ld	hl, #6
 	add	hl, sp
 	ld	sp, hl
-;src\VDP_VPRINT.c:112: }
+;src\VDP_VPRINT.c:125: }
 	ld	sp, ix
 	pop	ix
 	ret
-;src\VDP_VPRINT.c:123: void num2Dec16(unsigned int aNumber, char *address)
+;src\VDP_VPRINT.c:136: void num2Dec16(unsigned int aNumber, char *address) __naked
 ;	---------------------------------
 ; Function num2Dec16
 ; ---------------------------------
 _num2Dec16::
-;src\VDP_VPRINT.c:185: __endasm;
+;src\VDP_VPRINT.c:198: __endasm;
 	push	IX
 	ld	IX,#0
 	add	IX,SP
@@ -318,7 +324,6 @@ _num2Dec16::
 	call	$Num1
 	ld	C,B
 	call	$Num1
-;jr	$Num3
 ;END
 	pop	IX
 	ret
@@ -341,9 +346,8 @@ _num2Dec16::
 	$Num4:
 	ld	(DE),A
 	inc	DE
-;ret	(endsam add a ret)
-;src\VDP_VPRINT.c:186: }
 	ret
+;src\VDP_VPRINT.c:199: }
 	.area _CODE
 	.area _INITIALIZER
 	.area _CABS (ABS)

@@ -1,8 +1,13 @@
 /* =============================================================================
    SDCC VDP_VPRINT Lib v1.1 (9/Sep/2020)
-
+   Author: mvac7
+   Architecture: MSX
+   Format: .rel (SDCC object file)
+   Programming language: C
+   
    Description:
-     Functions to display text strings in the graphic modes of the TMS9918A
+     Functions Library for display text strings in the graphic modes of the 
+     TMS9918A (G1 and G2).
      
    History of versions:
    - v1.1 (9/Sep/2020) <<current version>>
@@ -19,8 +24,7 @@ char CSTATE;
 /* =============================================================================
  It provides the address of the video memory map tiles, from the screen position
  indicated.
- Proporciona la direccion de la memoria de video del mapa de tiles, a partir de
- la posicion de pantalla indicada.
+
  Inputs:
    column (byte) 0 - 31
    line (byte) 0 - 23
@@ -31,9 +35,10 @@ unsigned int GetVRAMaddressByPosition(char column, char line)
 }
 
 
+
 /* =============================================================================
- Prints a string in the indicated position.
- Imprime una cadena de texto en la posición indicada.
+ Prints a string at the indicated screen position
+
  Inputs:
    column (byte) 0 - 31
    line (byte) 0 - 23
@@ -46,34 +51,37 @@ void VPRINT(char column, char line, char* text)
 }
 
 
+
 /* =============================================================================
- Prints a string in the indicated position.
- Imprime una cadena de texto en la posición indicada.
+ Prints a string at the indicated screen position
+
  Inputs:
    column (byte) 0 - 31
    line (byte) 0 - 23
    text (char*) string
-   length (uint) longitud de la cadena a imprimir.
+   length (uint) length of the string to print
 ============================================================================= */
 void VPRINTN(char column, char line, char* text, unsigned int length)
 {
   unsigned int vaddr = GetVRAMaddressByPosition(column, line);
-  CopyToVRAM((unsigned int) text,vaddr,length);
+  CopyToVRAM((unsigned int) text, vaddr, length);
 }
 
 
 
 /* =============================================================================
- Dump the contents of an array of char in a position shown in the video memory.
- Vuelca el contenido de un array de char en una posición indicada de la memoria 
- de vídeo.
+ Dump the contents of an array of char in a position shown in the video memory
+
  Inputs:
    vaddr (uint) 
    text (char*) array
 ============================================================================= */
 void VPrintString(unsigned int vaddr, char* text)
 {
-  while(*(text)) VPOKE(vaddr++,*(text++));
+  char length=0;
+  while(text[length]) length++;
+  //while(*(text)) VPOKE(vaddr++,*(text++));
+  CopyToVRAM((unsigned int) text, vaddr, length);
 }
 
 
@@ -81,6 +89,7 @@ void VPrintString(unsigned int vaddr, char* text)
 /* =============================================================================
    VPrintNumber
    Prints a number at the specified position on the screen.
+   
    Inputs:
      [char] column 0 - 31
      [char] line   0 - 23
@@ -98,6 +107,7 @@ void VPrintNumber(char column, char line, unsigned int value, char length)
 /* =============================================================================
    VPrintNum
    Prints a number at the specified position on the screen.
+   
    Inputs:
      [unsigned int] VRAM address in Pattern Name Table.
      [unsigned int] number
@@ -118,12 +128,12 @@ void VPrintNum(unsigned int vaddr, unsigned int value, char length)
 
 /* =============================================================================
  16-bit Integer to ASCII (decimal)
- original code by baze
+ original code by baze http://baze.sk/3sc/misc/z80bits.html#5.1
  (update) Add functionality to replace leading zeros by spaces.  
  Input: HL = number to convert, DE = location of ASCII string
  Output: ASCII string at (DE)
 ============================================================================= */
-void num2Dec16(unsigned int aNumber, char *address)
+void num2Dec16(unsigned int aNumber, char *address) __naked
 {
   aNumber;
   address;
@@ -138,38 +148,38 @@ __asm
   ld   E,6(ix)
   ld   D,7(ix)
   
-  ld   A,#32   ;ASCII value for space
+  ld   A,#32         ;ASCII value for space
   ld   (#_CSTATE),A
   	
   ld   BC,#-10000
-	call $Num1
-	ld   BC,#-1000
-	call $Num1
-	ld	 BC,#-100
-	call $Num1
-	ld	 C,#-10
-	call $Num1
-	ld	 C,B
-	call $Num1
-  ;jr   $Num3
+  call $Num1
+  ld   BC,#-1000
+  call $Num1
+  ld   BC,#-100
+  call $Num1
+  ld   C,#-10
+  call $Num1
+  ld   C,B
+  call $Num1
+
   ;END
   pop  IX
   ret
     
 $Num1:	
-  ld	 A,#47 ; 0 ASCII char - 1
+  ld   A,#47 ; 0 ASCII char - 1
    
 $Num2:	
-  inc	 A
-	add	 HL,BC
-	jr	 C,$Num2
-	
-	sbc	 HL,BC
-	
-	cp   #48       
-	jr   NZ,$Num3  ;if A!=0 then goto $Num3
-	
-	ld   A,(#_CSTATE)
+  inc  A
+  add  HL,BC
+  jr   C,$Num2
+  
+  sbc  HL,BC
+  
+  cp   #48       
+  jr   NZ,$Num3  ;if A!=0 then goto $Num3
+  
+  ld   A,(#_CSTATE)
   jr   $Num4
 
 
@@ -180,10 +190,10 @@ $Num3:
   pop  AF	
 	
 $Num4:	
-	ld	 (DE),A
-	inc	 DE
-		
-	;ret  (endsam add a ret)
+  ld   (DE),A
+  inc  DE
+  	
+  ret
   
 __endasm;
 }

@@ -1,8 +1,13 @@
 /* =============================================================================
    SDCC VDP_VPRINT Lib v1.1 (9/Sep/2020)
-
+   Author: mvac7
+   Architecture: MSX
+   Format: .rel (SDCC object file)
+   Programming language: C
+   
    Description:
-     Functions to display text strings in the graphic modes of the TMS9918A
+     Functions Library for display text strings in the graphic modes of the 
+     TMS9918A (G1 and G2).
      
    History of versions:
    - v1.1 (9/Sep/2020) <<current version>>
@@ -24,8 +29,9 @@
 unsigned int GetVRAMaddressByPosition(char column, char line);
 
 
+
 /* =============================================================================
- Prints a string in the indicated position.
+ Prints a string at the indicated screen position
  
  Inputs:
    column (byte) 0 - 31
@@ -35,21 +41,22 @@ unsigned int GetVRAMaddressByPosition(char column, char line);
 void VPRINT(char column, char line, char* text);
 
 
+
 /* =============================================================================
- Prints a string in the indicated position.
+ Prints a string at the indicated screen position
  
  Inputs:
    column (byte) 0 - 31
    line (byte) 0 - 23
    text (char*) string
-   length (uint) longitud de la cadena a imprimir.
+   length (uint) length of the string to print
 ============================================================================= */
 void VPRINTN(char column, char line, char* text, unsigned int length);
 
 
 
 /* =============================================================================
- Dump the contents of an array of char in a position shown in the video memory.
+ Dump the contents of an array of char in a position shown in the video memory
 
  Inputs:
    vaddress (uint) 
@@ -88,12 +95,13 @@ void VPrintNum(unsigned int vaddr, unsigned int value, char length);
 
 /* =============================================================================
  16-bit Integer to ASCII (decimal)
- original code by baze
+ original code by baze http://baze.sk/3sc/misc/z80bits.html#5.1
  (update) Add functionality to replace leading zeros by spaces.  
  Input: HL = number to convert, DE = location of ASCII string
  Output: ASCII string at (DE)
 ============================================================================= */
 void num2Dec16(unsigned int aNumber, char *address);
+
 
 
 //void VPRINTO(byte column, byte line, char* text, char offset);

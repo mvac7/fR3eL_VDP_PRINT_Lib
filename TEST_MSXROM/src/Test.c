@@ -247,9 +247,9 @@ void test()
   VPRINT(3,4,"Alea iacta est");
   TwoSeconds();
   
-  VPRINT(0,6,">Test VPRINTN [16chars]");
+  VPRINT(0,6,">Test VPRINTN [10 chars]");
   TwoSeconds();
-  VPRINTN(3,7,"Gaudeamus igitur iuvenes dum sumus",16);
+  VPRINTN(3,7,"Alea iacta est",10);
   TwoSeconds();
   
   VPRINT(0,9,">test GetVRAMaddressByPosition()");
@@ -272,10 +272,10 @@ la ejecucion sera más rapida*/
   VPrintNumber(3,16,255,3);
   TwoSeconds();  
   
-  VPRINT(0,18,">Test VPrintNum(vaddr,12345,5)");
+  VPRINT(0,18,">Test VPrintNum(vaddr,1234,5)");
   TwoSeconds();
   vaddr = BASE10 + (19*32)+3;
-  VPrintNum(vaddr,12345,5);
+  VPrintNum(vaddr,1234,5);
   TwoSeconds();
 
 }

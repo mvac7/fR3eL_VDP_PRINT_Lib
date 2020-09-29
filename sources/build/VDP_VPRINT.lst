@@ -9,341 +9,345 @@
                               9 ; Public variables in this module
                              10 ;--------------------------------------------------------
                              11 	.globl _CopyToVRAM
-                             12 	.globl _VPOKE
-                             13 	.globl _CSTATE
-                             14 	.globl _GetVRAMaddressByPosition
-                             15 	.globl _VPRINT
-                             16 	.globl _VPRINTN
-                             17 	.globl _VPrintString
-                             18 	.globl _VPrintNumber
-                             19 	.globl _VPrintNum
-                             20 	.globl _num2Dec16
-                             21 ;--------------------------------------------------------
-                             22 ; special function registers
+                             12 	.globl _CSTATE
+                             13 	.globl _GetVRAMaddressByPosition
+                             14 	.globl _VPRINT
+                             15 	.globl _VPRINTN
+                             16 	.globl _VPrintString
+                             17 	.globl _VPrintNumber
+                             18 	.globl _VPrintNum
+                             19 	.globl _num2Dec16
+                             20 ;--------------------------------------------------------
+                             21 ; special function registers
+                             22 ;--------------------------------------------------------
                              23 ;--------------------------------------------------------
-                             24 ;--------------------------------------------------------
-                             25 ; ram data
-                             26 ;--------------------------------------------------------
-                             27 	.area _DATA
-   0000                      28 _CSTATE::
-   0000                      29 	.ds 1
-                             30 ;--------------------------------------------------------
-                             31 ; ram data
-                             32 ;--------------------------------------------------------
-                             33 	.area _INITIALIZED
-                             34 ;--------------------------------------------------------
-                             35 ; absolute external ram data
-                             36 ;--------------------------------------------------------
-                             37 	.area _DABS (ABS)
-                             38 ;--------------------------------------------------------
-                             39 ; global & static initialisations
-                             40 ;--------------------------------------------------------
-                             41 	.area _HOME
-                             42 	.area _GSINIT
-                             43 	.area _GSFINAL
-                             44 	.area _GSINIT
-                             45 ;--------------------------------------------------------
-                             46 ; Home
-                             47 ;--------------------------------------------------------
+                             24 ; ram data
+                             25 ;--------------------------------------------------------
+                             26 	.area _DATA
+   0000                      27 _CSTATE::
+   0000                      28 	.ds 1
+                             29 ;--------------------------------------------------------
+                             30 ; ram data
+                             31 ;--------------------------------------------------------
+                             32 	.area _INITIALIZED
+                             33 ;--------------------------------------------------------
+                             34 ; absolute external ram data
+                             35 ;--------------------------------------------------------
+                             36 	.area _DABS (ABS)
+                             37 ;--------------------------------------------------------
+                             38 ; global & static initialisations
+                             39 ;--------------------------------------------------------
+                             40 	.area _HOME
+                             41 	.area _GSINIT
+                             42 	.area _GSFINAL
+                             43 	.area _GSINIT
+                             44 ;--------------------------------------------------------
+                             45 ; Home
+                             46 ;--------------------------------------------------------
+                             47 	.area _HOME
                              48 	.area _HOME
-                             49 	.area _HOME
-                             50 ;--------------------------------------------------------
-                             51 ; code
-                             52 ;--------------------------------------------------------
-                             53 	.area _CODE
-                             54 ;src\VDP_VPRINT.c:25: unsigned int GetVRAMaddressByPosition(char column, char line)
-                             55 ;	---------------------------------
-                             56 ; Function GetVRAMaddressByPosition
-                             57 ; ---------------------------------
-   0000                      58 _GetVRAMaddressByPosition::
-   0000 DD E5         [15]   59 	push	ix
-   0002 DD 21 00 00   [14]   60 	ld	ix,#0
-   0006 DD 39         [15]   61 	add	ix,sp
-                             62 ;src\VDP_VPRINT.c:27: return BASE10 + (line*32)+column;
-   0008 DD 6E 05      [19]   63 	ld	l, 5 (ix)
-   000B 26 00         [ 7]   64 	ld	h, #0x00
-   000D 29            [11]   65 	add	hl, hl
-   000E 29            [11]   66 	add	hl, hl
-   000F 29            [11]   67 	add	hl, hl
-   0010 29            [11]   68 	add	hl, hl
-   0011 29            [11]   69 	add	hl, hl
-   0012 01 00 18      [10]   70 	ld	bc, #0x1800
-   0015 09            [11]   71 	add	hl, bc
-   0016 DD 4E 04      [19]   72 	ld	c, 4 (ix)
-   0019 06 00         [ 7]   73 	ld	b, #0x00
-   001B 09            [11]   74 	add	hl, bc
-                             75 ;src\VDP_VPRINT.c:28: }
-   001C DD E1         [14]   76 	pop	ix
-   001E C9            [10]   77 	ret
-                             78 ;src\VDP_VPRINT.c:39: void VPRINT(char column, char line, char* text)
-                             79 ;	---------------------------------
-                             80 ; Function VPRINT
-                             81 ; ---------------------------------
-   001F                      82 _VPRINT::
-                             83 ;src\VDP_VPRINT.c:41: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
-   001F 21 03 00      [10]   84 	ld	hl, #3+0
-   0022 39            [11]   85 	add	hl, sp
-   0023 7E            [ 7]   86 	ld	a, (hl)
-   0024 F5            [11]   87 	push	af
-   0025 33            [ 6]   88 	inc	sp
-   0026 21 03 00      [10]   89 	ld	hl, #3+0
-   0029 39            [11]   90 	add	hl, sp
-   002A 7E            [ 7]   91 	ld	a, (hl)
-   002B F5            [11]   92 	push	af
-   002C 33            [ 6]   93 	inc	sp
-   002D CDr00r00      [17]   94 	call	_GetVRAMaddressByPosition
-   0030 F1            [10]   95 	pop	af
-                             96 ;src\VDP_VPRINT.c:42: VPrintString(vaddr, text);
-   0031 FD 21 04 00   [14]   97 	ld	iy, #4
-   0035 FD 39         [15]   98 	add	iy, sp
-   0037 FD 4E 00      [19]   99 	ld	c, 0 (iy)
-   003A FD 46 01      [19]  100 	ld	b, 1 (iy)
-   003D C5            [11]  101 	push	bc
-   003E E5            [11]  102 	push	hl
-   003F CDr7Br00      [17]  103 	call	_VPrintString
-   0042 F1            [10]  104 	pop	af
-   0043 F1            [10]  105 	pop	af
-                            106 ;src\VDP_VPRINT.c:43: }
-   0044 C9            [10]  107 	ret
-                            108 ;src\VDP_VPRINT.c:55: void VPRINTN(char column, char line, char* text, unsigned int length)
-                            109 ;	---------------------------------
-                            110 ; Function VPRINTN
-                            111 ; ---------------------------------
-   0045                     112 _VPRINTN::
-                            113 ;src\VDP_VPRINT.c:57: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
-   0045 21 03 00      [10]  114 	ld	hl, #3+0
-   0048 39            [11]  115 	add	hl, sp
-   0049 7E            [ 7]  116 	ld	a, (hl)
-   004A F5            [11]  117 	push	af
-   004B 33            [ 6]  118 	inc	sp
-   004C 21 03 00      [10]  119 	ld	hl, #3+0
-   004F 39            [11]  120 	add	hl, sp
-   0050 7E            [ 7]  121 	ld	a, (hl)
-   0051 F5            [11]  122 	push	af
-   0052 33            [ 6]  123 	inc	sp
-   0053 CDr00r00      [17]  124 	call	_GetVRAMaddressByPosition
-   0056 F1            [10]  125 	pop	af
-                            126 ;src\VDP_VPRINT.c:58: CopyToVRAM((unsigned int) text,vaddr,length);
-   0057 FD 21 04 00   [14]  127 	ld	iy, #4
-   005B FD 39         [15]  128 	add	iy, sp
-   005D FD 4E 00      [19]  129 	ld	c, 0 (iy)
-   0060 FD 46 01      [19]  130 	ld	b, 1 (iy)
-   0063 FD 21 06 00   [14]  131 	ld	iy, #6
-   0067 FD 39         [15]  132 	add	iy, sp
-   0069 FD 5E 00      [19]  133 	ld	e, 0 (iy)
-   006C FD 56 01      [19]  134 	ld	d, 1 (iy)
-   006F D5            [11]  135 	push	de
-   0070 E5            [11]  136 	push	hl
-   0071 C5            [11]  137 	push	bc
-   0072 CDr00r00      [17]  138 	call	_CopyToVRAM
-   0075 21 06 00      [10]  139 	ld	hl, #6
-   0078 39            [11]  140 	add	hl, sp
-   0079 F9            [ 6]  141 	ld	sp, hl
-                            142 ;src\VDP_VPRINT.c:59: }
-   007A C9            [10]  143 	ret
-                            144 ;src\VDP_VPRINT.c:71: void VPrintString(unsigned int vaddr, char* text)
-                            145 ;	---------------------------------
-                            146 ; Function VPrintString
-                            147 ; ---------------------------------
-   007B                     148 _VPrintString::
-   007B DD E5         [15]  149 	push	ix
-   007D DD 21 00 00   [14]  150 	ld	ix,#0
-   0081 DD 39         [15]  151 	add	ix,sp
-                            152 ;src\VDP_VPRINT.c:73: while(*(text)) VPOKE(vaddr++,*(text++));
-   0083 DD 4E 06      [19]  153 	ld	c, 6 (ix)
-   0086 DD 46 07      [19]  154 	ld	b, 7 (ix)
-   0089 DD 5E 04      [19]  155 	ld	e, 4 (ix)
-   008C DD 56 05      [19]  156 	ld	d, 5 (ix)
-   008F                     157 00101$:
-   008F 0A            [ 7]  158 	ld	a, (bc)
-   0090 B7            [ 4]  159 	or	a, a
-   0091 28 15         [12]  160 	jr	Z,00104$
-   0093 67            [ 4]  161 	ld	h, a
-   0094 03            [ 6]  162 	inc	bc
-   0095 D5            [11]  163 	push	de
-   0096 FD E1         [14]  164 	pop	iy
-   0098 13            [ 6]  165 	inc	de
-   0099 C5            [11]  166 	push	bc
-   009A D5            [11]  167 	push	de
-   009B E5            [11]  168 	push	hl
-   009C 33            [ 6]  169 	inc	sp
-   009D FD E5         [15]  170 	push	iy
-   009F CDr00r00      [17]  171 	call	_VPOKE
-   00A2 F1            [10]  172 	pop	af
-   00A3 33            [ 6]  173 	inc	sp
-   00A4 D1            [10]  174 	pop	de
-   00A5 C1            [10]  175 	pop	bc
-   00A6 18 E7         [12]  176 	jr	00101$
-   00A8                     177 00104$:
-                            178 ;src\VDP_VPRINT.c:74: }
-   00A8 DD E1         [14]  179 	pop	ix
-   00AA C9            [10]  180 	ret
-                            181 ;src\VDP_VPRINT.c:87: void VPrintNumber(char column, char line, unsigned int value, char length)
-                            182 ;	---------------------------------
-                            183 ; Function VPrintNumber
-                            184 ; ---------------------------------
-   00AB                     185 _VPrintNumber::
-                            186 ;src\VDP_VPRINT.c:89: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
-   00AB 21 03 00      [10]  187 	ld	hl, #3+0
-   00AE 39            [11]  188 	add	hl, sp
-   00AF 7E            [ 7]  189 	ld	a, (hl)
-   00B0 F5            [11]  190 	push	af
-   00B1 33            [ 6]  191 	inc	sp
-   00B2 21 03 00      [10]  192 	ld	hl, #3+0
-   00B5 39            [11]  193 	add	hl, sp
-   00B6 7E            [ 7]  194 	ld	a, (hl)
-   00B7 F5            [11]  195 	push	af
-   00B8 33            [ 6]  196 	inc	sp
-   00B9 CDr00r00      [17]  197 	call	_GetVRAMaddressByPosition
-   00BC F1            [10]  198 	pop	af
-   00BD 4D            [ 4]  199 	ld	c, l
-   00BE 44            [ 4]  200 	ld	b, h
-                            201 ;src\VDP_VPRINT.c:91: VPrintNum(vaddr, value, length);
-   00BF 21 06 00      [10]  202 	ld	hl, #6+0
-   00C2 39            [11]  203 	add	hl, sp
-   00C3 7E            [ 7]  204 	ld	a, (hl)
-   00C4 F5            [11]  205 	push	af
-   00C5 33            [ 6]  206 	inc	sp
-   00C6 21 05 00      [10]  207 	ld	hl, #5
-   00C9 39            [11]  208 	add	hl, sp
-   00CA 7E            [ 7]  209 	ld	a, (hl)
-   00CB 23            [ 6]  210 	inc	hl
-   00CC 66            [ 7]  211 	ld	h, (hl)
-   00CD 6F            [ 4]  212 	ld	l, a
-   00CE E5            [11]  213 	push	hl
-   00CF C5            [11]  214 	push	bc
-   00D0 CDrD7r00      [17]  215 	call	_VPrintNum
-   00D3 F1            [10]  216 	pop	af
-   00D4 F1            [10]  217 	pop	af
-   00D5 33            [ 6]  218 	inc	sp
-                            219 ;src\VDP_VPRINT.c:92: }
-   00D6 C9            [10]  220 	ret
-                            221 ;src\VDP_VPRINT.c:103: void VPrintNum(unsigned int vaddr, unsigned int value, char length)
-                            222 ;	---------------------------------
-                            223 ; Function VPrintNum
-                            224 ; ---------------------------------
-   00D7                     225 _VPrintNum::
-   00D7 DD E5         [15]  226 	push	ix
-   00D9 DD 21 00 00   [14]  227 	ld	ix,#0
-   00DD DD 39         [15]  228 	add	ix,sp
-   00DF 21 FA FF      [10]  229 	ld	hl, #-6
-   00E2 39            [11]  230 	add	hl, sp
-   00E3 F9            [ 6]  231 	ld	sp, hl
-                            232 ;src\VDP_VPRINT.c:106: char text[]="     ";
-   00E4 21 00 00      [10]  233 	ld	hl, #0
-   00E7 39            [11]  234 	add	hl, sp
-   00E8 EB            [ 4]  235 	ex	de, hl
-   00E9 3E 20         [ 7]  236 	ld	a, #0x20
-   00EB 12            [ 7]  237 	ld	(de), a
-   00EC 6B            [ 4]  238 	ld	l, e
-   00ED 62            [ 4]  239 	ld	h, d
-   00EE 23            [ 6]  240 	inc	hl
-   00EF 36 20         [10]  241 	ld	(hl), #0x20
-   00F1 6B            [ 4]  242 	ld	l, e
-   00F2 62            [ 4]  243 	ld	h, d
-   00F3 23            [ 6]  244 	inc	hl
-   00F4 23            [ 6]  245 	inc	hl
-   00F5 36 20         [10]  246 	ld	(hl), #0x20
-   00F7 6B            [ 4]  247 	ld	l, e
-   00F8 62            [ 4]  248 	ld	h, d
-   00F9 23            [ 6]  249 	inc	hl
-   00FA 23            [ 6]  250 	inc	hl
-   00FB 23            [ 6]  251 	inc	hl
-   00FC 36 20         [10]  252 	ld	(hl), #0x20
-   00FE 21 04 00      [10]  253 	ld	hl, #0x0004
-   0101 19            [11]  254 	add	hl, de
-   0102 36 20         [10]  255 	ld	(hl), #0x20
-   0104 21 05 00      [10]  256 	ld	hl, #0x0005
-   0107 19            [11]  257 	add	hl, de
-   0108 36 00         [10]  258 	ld	(hl), #0x00
-                            259 ;src\VDP_VPRINT.c:108: num2Dec16(value, text); 
-   010A 4B            [ 4]  260 	ld	c, e
-   010B 42            [ 4]  261 	ld	b, d
-   010C D5            [11]  262 	push	de
-   010D C5            [11]  263 	push	bc
-   010E DD 6E 06      [19]  264 	ld	l, 6 (ix)
-   0111 DD 66 07      [19]  265 	ld	h, 7 (ix)
-   0114 E5            [11]  266 	push	hl
-   0115 CDr44r01      [17]  267 	call	_num2Dec16
-   0118 F1            [10]  268 	pop	af
-   0119 F1            [10]  269 	pop	af
-   011A D1            [10]  270 	pop	de
-                            271 ;src\VDP_VPRINT.c:111: CopyToVRAM((unsigned int) text + (5-length), vaddr, length);
-   011B DD 4E 08      [19]  272 	ld	c, 8 (ix)
-   011E 06 00         [ 7]  273 	ld	b, #0x00
-   0120 DD 6E 08      [19]  274 	ld	l, 8 (ix)
-   0123 26 00         [ 7]  275 	ld	h, #0x00
-   0125 3E 05         [ 7]  276 	ld	a, #0x05
-   0127 95            [ 4]  277 	sub	a, l
-   0128 6F            [ 4]  278 	ld	l, a
-   0129 3E 00         [ 7]  279 	ld	a, #0x00
-   012B 9C            [ 4]  280 	sbc	a, h
-   012C 67            [ 4]  281 	ld	h, a
-   012D 19            [11]  282 	add	hl, de
-   012E C5            [11]  283 	push	bc
-   012F DD 4E 04      [19]  284 	ld	c, 4 (ix)
-   0132 DD 46 05      [19]  285 	ld	b, 5 (ix)
-   0135 C5            [11]  286 	push	bc
-   0136 E5            [11]  287 	push	hl
-   0137 CDr00r00      [17]  288 	call	_CopyToVRAM
-   013A 21 06 00      [10]  289 	ld	hl, #6
-   013D 39            [11]  290 	add	hl, sp
-   013E F9            [ 6]  291 	ld	sp, hl
-                            292 ;src\VDP_VPRINT.c:112: }
-   013F DD F9         [10]  293 	ld	sp, ix
-   0141 DD E1         [14]  294 	pop	ix
-   0143 C9            [10]  295 	ret
-                            296 ;src\VDP_VPRINT.c:123: void num2Dec16(unsigned int aNumber, char *address)
-                            297 ;	---------------------------------
-                            298 ; Function num2Dec16
-                            299 ; ---------------------------------
-   0144                     300 _num2Dec16::
-                            301 ;src\VDP_VPRINT.c:185: __endasm;
-   0144 DD E5         [15]  302 	push	IX
-   0146 DD 21 00 00   [14]  303 	ld	IX,#0
-   014A DD 39         [15]  304 	add	IX,SP
-   014C DD 6E 04      [19]  305 	ld	L,4(ix)
-   014F DD 66 05      [19]  306 	ld	H,5(ix)
-   0152 DD 5E 06      [19]  307 	ld	E,6(ix)
-   0155 DD 56 07      [19]  308 	ld	D,7(ix)
-   0158 3E 20         [ 7]  309 	ld	A,#32 ;ASCII value for space
-   015A 32r00r00      [13]  310 	ld	(#_CSTATE),A
-   015D 01 F0 D8      [10]  311 	ld	BC,#-10000
-   0160 CDr7Br01      [17]  312 	call	$Num1
-   0163 01 18 FC      [10]  313 	ld	BC,#-1000
-   0166 CDr7Br01      [17]  314 	call	$Num1
-   0169 01 9C FF      [10]  315 	ld	BC,#-100
-   016C CDr7Br01      [17]  316 	call	$Num1
-   016F 0E F6         [ 7]  317 	ld	C,#-10
-   0171 CDr7Br01      [17]  318 	call	$Num1
-   0174 48            [ 4]  319 	ld	C,B
-   0175 CDr7Br01      [17]  320 	call	$Num1
-                            321 ;jr	$Num3
-                            322 ;END
-   0178 DD E1         [14]  323 	pop	IX
-   017A C9            [10]  324 	ret
-   017B                     325 	$Num1:
-   017B 3E 2F         [ 7]  326 	ld	A,#47 ; 0 ASCII char - 1
-   017D                     327 	$Num2:
-   017D 3C            [ 4]  328 	inc	A
-   017E 09            [11]  329 	add	HL,BC
-   017F 38 FC         [12]  330 	jr	C,$Num2
-   0181 ED 42         [15]  331 	sbc	HL,BC
-   0183 FE 30         [ 7]  332 	cp	#48
-   0185 20 05         [12]  333 	jr	NZ,$Num3 ;if A!=0 then goto $Num3
-   0187 3Ar00r00      [13]  334 	ld	A,(#_CSTATE)
-   018A 18 07         [12]  335 	jr	$Num4
-   018C                     336 	$Num3:
-   018C F5            [11]  337 	push	AF
-   018D 3E 30         [ 7]  338 	ld	A,#48 ;ASCII value for 0
-   018F 32r00r00      [13]  339 	ld	(#_CSTATE),A
-   0192 F1            [10]  340 	pop	AF
-   0193                     341 	$Num4:
-   0193 12            [ 7]  342 	ld	(DE),A
-   0194 13            [ 6]  343 	inc	DE
-                            344 ;ret	(endsam add a ret)
-                            345 ;src\VDP_VPRINT.c:186: }
-   0195 C9            [10]  346 	ret
-                            347 	.area _CODE
-                            348 	.area _INITIALIZER
-                            349 	.area _CABS (ABS)
+                             49 ;--------------------------------------------------------
+                             50 ; code
+                             51 ;--------------------------------------------------------
+                             52 	.area _CODE
+                             53 ;src\VDP_VPRINT.c:32: unsigned int GetVRAMaddressByPosition(char column, char line)
+                             54 ;	---------------------------------
+                             55 ; Function GetVRAMaddressByPosition
+                             56 ; ---------------------------------
+   0000                      57 _GetVRAMaddressByPosition::
+   0000 DD E5         [15]   58 	push	ix
+   0002 DD 21 00 00   [14]   59 	ld	ix,#0
+   0006 DD 39         [15]   60 	add	ix,sp
+                             61 ;src\VDP_VPRINT.c:34: return BASE10 + (line*32)+column;
+   0008 DD 6E 05      [19]   62 	ld	l, 5 (ix)
+   000B 26 00         [ 7]   63 	ld	h, #0x00
+   000D 29            [11]   64 	add	hl, hl
+   000E 29            [11]   65 	add	hl, hl
+   000F 29            [11]   66 	add	hl, hl
+   0010 29            [11]   67 	add	hl, hl
+   0011 29            [11]   68 	add	hl, hl
+   0012 01 00 18      [10]   69 	ld	bc, #0x1800
+   0015 09            [11]   70 	add	hl, bc
+   0016 DD 4E 04      [19]   71 	ld	c, 4 (ix)
+   0019 06 00         [ 7]   72 	ld	b, #0x00
+   001B 09            [11]   73 	add	hl, bc
+                             74 ;src\VDP_VPRINT.c:35: }
+   001C DD E1         [14]   75 	pop	ix
+   001E C9            [10]   76 	ret
+                             77 ;src\VDP_VPRINT.c:47: void VPRINT(char column, char line, char* text)
+                             78 ;	---------------------------------
+                             79 ; Function VPRINT
+                             80 ; ---------------------------------
+   001F                      81 _VPRINT::
+                             82 ;src\VDP_VPRINT.c:49: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
+   001F 21 03 00      [10]   83 	ld	hl, #3+0
+   0022 39            [11]   84 	add	hl, sp
+   0023 7E            [ 7]   85 	ld	a, (hl)
+   0024 F5            [11]   86 	push	af
+   0025 33            [ 6]   87 	inc	sp
+   0026 21 03 00      [10]   88 	ld	hl, #3+0
+   0029 39            [11]   89 	add	hl, sp
+   002A 7E            [ 7]   90 	ld	a, (hl)
+   002B F5            [11]   91 	push	af
+   002C 33            [ 6]   92 	inc	sp
+   002D CDr00r00      [17]   93 	call	_GetVRAMaddressByPosition
+   0030 F1            [10]   94 	pop	af
+                             95 ;src\VDP_VPRINT.c:50: VPrintString(vaddr, text);
+   0031 FD 21 04 00   [14]   96 	ld	iy, #4
+   0035 FD 39         [15]   97 	add	iy, sp
+   0037 FD 4E 00      [19]   98 	ld	c, 0 (iy)
+   003A FD 46 01      [19]   99 	ld	b, 1 (iy)
+   003D C5            [11]  100 	push	bc
+   003E E5            [11]  101 	push	hl
+   003F CDr7Br00      [17]  102 	call	_VPrintString
+   0042 F1            [10]  103 	pop	af
+   0043 F1            [10]  104 	pop	af
+                            105 ;src\VDP_VPRINT.c:51: }
+   0044 C9            [10]  106 	ret
+                            107 ;src\VDP_VPRINT.c:64: void VPRINTN(char column, char line, char* text, unsigned int length)
+                            108 ;	---------------------------------
+                            109 ; Function VPRINTN
+                            110 ; ---------------------------------
+   0045                     111 _VPRINTN::
+                            112 ;src\VDP_VPRINT.c:66: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
+   0045 21 03 00      [10]  113 	ld	hl, #3+0
+   0048 39            [11]  114 	add	hl, sp
+   0049 7E            [ 7]  115 	ld	a, (hl)
+   004A F5            [11]  116 	push	af
+   004B 33            [ 6]  117 	inc	sp
+   004C 21 03 00      [10]  118 	ld	hl, #3+0
+   004F 39            [11]  119 	add	hl, sp
+   0050 7E            [ 7]  120 	ld	a, (hl)
+   0051 F5            [11]  121 	push	af
+   0052 33            [ 6]  122 	inc	sp
+   0053 CDr00r00      [17]  123 	call	_GetVRAMaddressByPosition
+   0056 F1            [10]  124 	pop	af
+                            125 ;src\VDP_VPRINT.c:67: CopyToVRAM((unsigned int) text, vaddr, length);
+   0057 FD 21 04 00   [14]  126 	ld	iy, #4
+   005B FD 39         [15]  127 	add	iy, sp
+   005D FD 4E 00      [19]  128 	ld	c, 0 (iy)
+   0060 FD 46 01      [19]  129 	ld	b, 1 (iy)
+   0063 FD 21 06 00   [14]  130 	ld	iy, #6
+   0067 FD 39         [15]  131 	add	iy, sp
+   0069 FD 5E 00      [19]  132 	ld	e, 0 (iy)
+   006C FD 56 01      [19]  133 	ld	d, 1 (iy)
+   006F D5            [11]  134 	push	de
+   0070 E5            [11]  135 	push	hl
+   0071 C5            [11]  136 	push	bc
+   0072 CDr00r00      [17]  137 	call	_CopyToVRAM
+   0075 21 06 00      [10]  138 	ld	hl, #6
+   0078 39            [11]  139 	add	hl, sp
+   0079 F9            [ 6]  140 	ld	sp, hl
+                            141 ;src\VDP_VPRINT.c:68: }
+   007A C9            [10]  142 	ret
+                            143 ;src\VDP_VPRINT.c:79: void VPrintString(unsigned int vaddr, char* text)
+                            144 ;	---------------------------------
+                            145 ; Function VPrintString
+                            146 ; ---------------------------------
+   007B                     147 _VPrintString::
+                            148 ;src\VDP_VPRINT.c:82: while(text[length]) length++;
+   007B 1E 00         [ 7]  149 	ld	e, #0x00
+   007D                     150 00101$:
+   007D 21 04 00      [10]  151 	ld	hl, #4
+   0080 39            [11]  152 	add	hl, sp
+   0081 7E            [ 7]  153 	ld	a, (hl)
+   0082 23            [ 6]  154 	inc	hl
+   0083 66            [ 7]  155 	ld	h, (hl)
+   0084 6F            [ 4]  156 	ld	l, a
+   0085 16 00         [ 7]  157 	ld	d, #0x00
+   0087 19            [11]  158 	add	hl, de
+   0088 7E            [ 7]  159 	ld	a, (hl)
+   0089 B7            [ 4]  160 	or	a, a
+   008A 28 03         [12]  161 	jr	Z,00103$
+   008C 1C            [ 4]  162 	inc	e
+   008D 18 EE         [12]  163 	jr	00101$
+   008F                     164 00103$:
+                            165 ;src\VDP_VPRINT.c:84: CopyToVRAM((unsigned int) text, vaddr, length);
+   008F 16 00         [ 7]  166 	ld	d, #0x00
+   0091 21 04 00      [10]  167 	ld	hl, #4
+   0094 39            [11]  168 	add	hl, sp
+   0095 4E            [ 7]  169 	ld	c, (hl)
+   0096 23            [ 6]  170 	inc	hl
+   0097 46            [ 7]  171 	ld	b, (hl)
+   0098 D5            [11]  172 	push	de
+   0099 21 04 00      [10]  173 	ld	hl, #4
+   009C 39            [11]  174 	add	hl, sp
+   009D 7E            [ 7]  175 	ld	a, (hl)
+   009E 23            [ 6]  176 	inc	hl
+   009F 66            [ 7]  177 	ld	h, (hl)
+   00A0 6F            [ 4]  178 	ld	l, a
+   00A1 E5            [11]  179 	push	hl
+   00A2 C5            [11]  180 	push	bc
+   00A3 CDr00r00      [17]  181 	call	_CopyToVRAM
+   00A6 21 06 00      [10]  182 	ld	hl, #6
+   00A9 39            [11]  183 	add	hl, sp
+   00AA F9            [ 6]  184 	ld	sp, hl
+                            185 ;src\VDP_VPRINT.c:85: }
+   00AB C9            [10]  186 	ret
+                            187 ;src\VDP_VPRINT.c:99: void VPrintNumber(char column, char line, unsigned int value, char length)
+                            188 ;	---------------------------------
+                            189 ; Function VPrintNumber
+                            190 ; ---------------------------------
+   00AC                     191 _VPrintNumber::
+                            192 ;src\VDP_VPRINT.c:101: unsigned int vaddr = GetVRAMaddressByPosition(column, line);
+   00AC 21 03 00      [10]  193 	ld	hl, #3+0
+   00AF 39            [11]  194 	add	hl, sp
+   00B0 7E            [ 7]  195 	ld	a, (hl)
+   00B1 F5            [11]  196 	push	af
+   00B2 33            [ 6]  197 	inc	sp
+   00B3 21 03 00      [10]  198 	ld	hl, #3+0
+   00B6 39            [11]  199 	add	hl, sp
+   00B7 7E            [ 7]  200 	ld	a, (hl)
+   00B8 F5            [11]  201 	push	af
+   00B9 33            [ 6]  202 	inc	sp
+   00BA CDr00r00      [17]  203 	call	_GetVRAMaddressByPosition
+   00BD F1            [10]  204 	pop	af
+   00BE 4D            [ 4]  205 	ld	c, l
+   00BF 44            [ 4]  206 	ld	b, h
+                            207 ;src\VDP_VPRINT.c:103: VPrintNum(vaddr, value, length);
+   00C0 21 06 00      [10]  208 	ld	hl, #6+0
+   00C3 39            [11]  209 	add	hl, sp
+   00C4 7E            [ 7]  210 	ld	a, (hl)
+   00C5 F5            [11]  211 	push	af
+   00C6 33            [ 6]  212 	inc	sp
+   00C7 21 05 00      [10]  213 	ld	hl, #5
+   00CA 39            [11]  214 	add	hl, sp
+   00CB 7E            [ 7]  215 	ld	a, (hl)
+   00CC 23            [ 6]  216 	inc	hl
+   00CD 66            [ 7]  217 	ld	h, (hl)
+   00CE 6F            [ 4]  218 	ld	l, a
+   00CF E5            [11]  219 	push	hl
+   00D0 C5            [11]  220 	push	bc
+   00D1 CDrD8r00      [17]  221 	call	_VPrintNum
+   00D4 F1            [10]  222 	pop	af
+   00D5 F1            [10]  223 	pop	af
+   00D6 33            [ 6]  224 	inc	sp
+                            225 ;src\VDP_VPRINT.c:104: }
+   00D7 C9            [10]  226 	ret
+                            227 ;src\VDP_VPRINT.c:116: void VPrintNum(unsigned int vaddr, unsigned int value, char length)
+                            228 ;	---------------------------------
+                            229 ; Function VPrintNum
+                            230 ; ---------------------------------
+   00D8                     231 _VPrintNum::
+   00D8 DD E5         [15]  232 	push	ix
+   00DA DD 21 00 00   [14]  233 	ld	ix,#0
+   00DE DD 39         [15]  234 	add	ix,sp
+   00E0 21 FA FF      [10]  235 	ld	hl, #-6
+   00E3 39            [11]  236 	add	hl, sp
+   00E4 F9            [ 6]  237 	ld	sp, hl
+                            238 ;src\VDP_VPRINT.c:119: char text[]="     ";
+   00E5 21 00 00      [10]  239 	ld	hl, #0
+   00E8 39            [11]  240 	add	hl, sp
+   00E9 EB            [ 4]  241 	ex	de, hl
+   00EA 3E 20         [ 7]  242 	ld	a, #0x20
+   00EC 12            [ 7]  243 	ld	(de), a
+   00ED 6B            [ 4]  244 	ld	l, e
+   00EE 62            [ 4]  245 	ld	h, d
+   00EF 23            [ 6]  246 	inc	hl
+   00F0 36 20         [10]  247 	ld	(hl), #0x20
+   00F2 6B            [ 4]  248 	ld	l, e
+   00F3 62            [ 4]  249 	ld	h, d
+   00F4 23            [ 6]  250 	inc	hl
+   00F5 23            [ 6]  251 	inc	hl
+   00F6 36 20         [10]  252 	ld	(hl), #0x20
+   00F8 6B            [ 4]  253 	ld	l, e
+   00F9 62            [ 4]  254 	ld	h, d
+   00FA 23            [ 6]  255 	inc	hl
+   00FB 23            [ 6]  256 	inc	hl
+   00FC 23            [ 6]  257 	inc	hl
+   00FD 36 20         [10]  258 	ld	(hl), #0x20
+   00FF 21 04 00      [10]  259 	ld	hl, #0x0004
+   0102 19            [11]  260 	add	hl, de
+   0103 36 20         [10]  261 	ld	(hl), #0x20
+   0105 21 05 00      [10]  262 	ld	hl, #0x0005
+   0108 19            [11]  263 	add	hl, de
+   0109 36 00         [10]  264 	ld	(hl), #0x00
+                            265 ;src\VDP_VPRINT.c:121: num2Dec16(value, text); 
+   010B 4B            [ 4]  266 	ld	c, e
+   010C 42            [ 4]  267 	ld	b, d
+   010D D5            [11]  268 	push	de
+   010E C5            [11]  269 	push	bc
+   010F DD 6E 06      [19]  270 	ld	l, 6 (ix)
+   0112 DD 66 07      [19]  271 	ld	h, 7 (ix)
+   0115 E5            [11]  272 	push	hl
+   0116 CDr45r01      [17]  273 	call	_num2Dec16
+   0119 F1            [10]  274 	pop	af
+   011A F1            [10]  275 	pop	af
+   011B D1            [10]  276 	pop	de
+                            277 ;src\VDP_VPRINT.c:124: CopyToVRAM((unsigned int) text + (5-length), vaddr, length);
+   011C DD 4E 08      [19]  278 	ld	c, 8 (ix)
+   011F 06 00         [ 7]  279 	ld	b, #0x00
+   0121 DD 6E 08      [19]  280 	ld	l, 8 (ix)
+   0124 26 00         [ 7]  281 	ld	h, #0x00
+   0126 3E 05         [ 7]  282 	ld	a, #0x05
+   0128 95            [ 4]  283 	sub	a, l
+   0129 6F            [ 4]  284 	ld	l, a
+   012A 3E 00         [ 7]  285 	ld	a, #0x00
+   012C 9C            [ 4]  286 	sbc	a, h
+   012D 67            [ 4]  287 	ld	h, a
+   012E 19            [11]  288 	add	hl, de
+   012F C5            [11]  289 	push	bc
+   0130 DD 4E 04      [19]  290 	ld	c, 4 (ix)
+   0133 DD 46 05      [19]  291 	ld	b, 5 (ix)
+   0136 C5            [11]  292 	push	bc
+   0137 E5            [11]  293 	push	hl
+   0138 CDr00r00      [17]  294 	call	_CopyToVRAM
+   013B 21 06 00      [10]  295 	ld	hl, #6
+   013E 39            [11]  296 	add	hl, sp
+   013F F9            [ 6]  297 	ld	sp, hl
+                            298 ;src\VDP_VPRINT.c:125: }
+   0140 DD F9         [10]  299 	ld	sp, ix
+   0142 DD E1         [14]  300 	pop	ix
+   0144 C9            [10]  301 	ret
+                            302 ;src\VDP_VPRINT.c:136: void num2Dec16(unsigned int aNumber, char *address) __naked
+                            303 ;	---------------------------------
+                            304 ; Function num2Dec16
+                            305 ; ---------------------------------
+   0145                     306 _num2Dec16::
+                            307 ;src\VDP_VPRINT.c:198: __endasm;
+   0145 DD E5         [15]  308 	push	IX
+   0147 DD 21 00 00   [14]  309 	ld	IX,#0
+   014B DD 39         [15]  310 	add	IX,SP
+   014D DD 6E 04      [19]  311 	ld	L,4(ix)
+   0150 DD 66 05      [19]  312 	ld	H,5(ix)
+   0153 DD 5E 06      [19]  313 	ld	E,6(ix)
+   0156 DD 56 07      [19]  314 	ld	D,7(ix)
+   0159 3E 20         [ 7]  315 	ld	A,#32 ;ASCII value for space
+   015B 32r00r00      [13]  316 	ld	(#_CSTATE),A
+   015E 01 F0 D8      [10]  317 	ld	BC,#-10000
+   0161 CDr7Cr01      [17]  318 	call	$Num1
+   0164 01 18 FC      [10]  319 	ld	BC,#-1000
+   0167 CDr7Cr01      [17]  320 	call	$Num1
+   016A 01 9C FF      [10]  321 	ld	BC,#-100
+   016D CDr7Cr01      [17]  322 	call	$Num1
+   0170 0E F6         [ 7]  323 	ld	C,#-10
+   0172 CDr7Cr01      [17]  324 	call	$Num1
+   0175 48            [ 4]  325 	ld	C,B
+   0176 CDr7Cr01      [17]  326 	call	$Num1
+                            327 ;END
+   0179 DD E1         [14]  328 	pop	IX
+   017B C9            [10]  329 	ret
+   017C                     330 	$Num1:
+   017C 3E 2F         [ 7]  331 	ld	A,#47 ; 0 ASCII char - 1
+   017E                     332 	$Num2:
+   017E 3C            [ 4]  333 	inc	A
+   017F 09            [11]  334 	add	HL,BC
+   0180 38 FC         [12]  335 	jr	C,$Num2
+   0182 ED 42         [15]  336 	sbc	HL,BC
+   0184 FE 30         [ 7]  337 	cp	#48
+   0186 20 05         [12]  338 	jr	NZ,$Num3 ;if A!=0 then goto $Num3
+   0188 3Ar00r00      [13]  339 	ld	A,(#_CSTATE)
+   018B 18 07         [12]  340 	jr	$Num4
+   018D                     341 	$Num3:
+   018D F5            [11]  342 	push	AF
+   018E 3E 30         [ 7]  343 	ld	A,#48 ;ASCII value for 0
+   0190 32r00r00      [13]  344 	ld	(#_CSTATE),A
+   0193 F1            [10]  345 	pop	AF
+   0194                     346 	$Num4:
+   0194 12            [ 7]  347 	ld	(DE),A
+   0195 13            [ 6]  348 	inc	DE
+   0196 C9            [10]  349 	ret
+                            350 ;src\VDP_VPRINT.c:199: }
+                            351 	.area _CODE
+                            352 	.area _INITIALIZER
+                            353 	.area _CABS (ABS)
