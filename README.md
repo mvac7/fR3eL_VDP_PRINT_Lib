@@ -27,15 +27,14 @@ Use them for developing MSX applications using Small Device C Compiler (SDCC) co
 
 It is adapted to work with the standard MSX screen configurations but it can be changed to the VRAM addresses of other computers or video game consoles.
 
-It includes an application created to test the library, but it can also be used to learn how to use it.
-
-![TEST_0000](https://user-images.githubusercontent.com/5410950/94546159-cc676e80-024d-11eb-9359-ff5692c859bc.png)
-
 This open-source project is for the MSX developer community and retro scene.
 You can use it in its entirety or part of its functions in your projects.
 
-I have adapted a routine for converting a 16 Bits value to ASCII, extracted from the Baze collection [(WEB)](http://baze.sk/3sc/misc/z80bits.html), for printing numbers. 
-It does not work with signed numbers, but my intention is to develop a function that supports it in the future.
+I have adapted a routine for converting a 16 Bits value to ASCII, extracted from the Baze collection [(WEB)](http://baze.sk/3sc/misc/z80bits.html#5.1), for printing numbers. 
+
+It includes an application created to test the library, but it can also be used to learn how to use it.
+
+![TEST_0000](https://user-images.githubusercontent.com/5410950/94546159-cc676e80-024d-11eb-9359-ff5692c859bc.png)
 
 This library is part of the [MSX fR3eL Project](https://github.com/mvac7/SDCC_MSX_fR3eL).
 
@@ -44,15 +43,15 @@ Enjoy it!
 
 
 ## History of versions
-- v1.1 (9/Sep/2020) **<current version>**
-- v1   (4/Feb/2016) First version
+* v1.1 (9/Sep/2020) **<current version>**
+* v1   (4/Feb/2016) First version
 
 
 
 ## Requirements
 
 * Small Device C Compiler (SDCC) v3.9 http://sdcc.sourceforge.net/
-* Hex2bin v2.2 (for test program) http://hex2bin.sourceforge.net/ 
+* Hex2bin v2.5 http://hex2bin.sourceforge.net/
 * VDP TMS9918A SDCC Library (fR3eL) - [MSX-DOS](https://github.com/mvac7/SDCC_TMS9918A_Lib) - [MSX-ROM](https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib)
 
 
@@ -71,9 +70,9 @@ Enjoy it!
 
 ## Acknowledgments
   
-Thanks for Info & help, to:
+I want to give a special thanks to all those who freely share their knowledge with the MSX developer community.
 
-* Baze [WEB](http://baze.sk/3sc/misc/z80bits.html)
+* Baze > [WEB](http://baze.sk/3sc/misc/z80bits.html)
 * Avelino Herrera > [WEB](http://msx.atlantes.org/index_es.html)
 * Nerlaska > [Blog](http://albertodehoyonebot.blogspot.com.es)
 * Marq/Lieves!Tuore > [Marq](http://www.kameli.net/marq/) [Lieves!Tuore](http://www.kameli.net/lt/)
