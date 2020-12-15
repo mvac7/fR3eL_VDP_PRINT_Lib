@@ -1,14 +1,11 @@
-# VDP VPRINT Functions Library
+# VDP VPRINT MSX SDCC Library (fR3eL Project)
 
-Author: mvac7
-
+```
+Author: mvac7 [mvac7303b@gmail.com]
 Architecture: MSX
-
-Format: .rel (SDCC object file)
-
-Programming language: C
-
-mail: mvac7303b@gmail.com
+Format: C Object (SDCC .rel)
+Programming language: C and Z80 assembler
+```
 
 
 
@@ -16,15 +13,9 @@ mail: mvac7303b@gmail.com
 
 
 
-## History of versions
-- v1.1 (9/Sep/2020) **<current version>**
-- v1   (4/Feb/2016) First version
-
-
-
 ## Description
 
-Functions Library (object), for display text strings in the graphic modes of the TMS9918A (G1 and G2).
+Functions for display text strings in the graphic modes of the TMS9918A (G1 and G2).
 
 Requires the VDP TMS9918A Library: 
 - for MSX-DOS https://github.com/mvac7/SDCC_TMS9918A_Lib
@@ -38,28 +29,23 @@ It is adapted to work with the standard MSX screen configurations but it can be 
 
 It includes an application created to test the library, but it can also be used to learn how to use it.
 
-This open-source project is for the MSX developer community and retro scene.
-
-You can use it in its entirety or part of its functions in your projects.
-
 ![TEST_0000](https://user-images.githubusercontent.com/5410950/94546159-cc676e80-024d-11eb-9359-ff5692c859bc.png)
 
+This open-source project is for the MSX developer community and retro scene.
+You can use it in its entirety or part of its functions in your projects.
 
-## Acknowledgments
-  
-Thanks for Info & help, to:
+I have adapted a routine for converting a 16 Bits value to ASCII, extracted from the Baze collection [(WEB)](http://baze.sk/3sc/misc/z80bits.html), for printing numbers. 
+It does not work with signed numbers, but my intention is to develop a function that supports it in the future.
 
-* Baze > http://baze.sk/3sc/misc/z80bits.html
-* Avelino Herrera > http://msx.atlantes.org/index_es.html
-* Nerlaska > http://albertodehoyonebot.blogspot.com.es
-* Andrear > http://andrear.altervista.org/home/msxsoftware.php
-* MSX Assembly Page > http://map.grauw.nl/resources/msxbios.php
-* Portar MSX Tech Doc > http://nocash.emubase.de/portar.htm
-* MSX Resource Center > http://www.msx.org/
-* Karoshi MSX Community > http://karoshi.auic.es/
-* BlueMSX >> http://www.bluemsx.com/
-* OpenMSX >> http://openmsx.sourceforge.net/
-* Meisei  >> ?
+This library is part of the [MSX fR3eL Project](https://github.com/mvac7/SDCC_MSX_fR3eL).
+
+Enjoy it!
+
+
+
+## History of versions
+- v1.1 (9/Sep/2020) **<current version>**
+- v1   (4/Feb/2016) First version
 
 
 
@@ -67,19 +53,40 @@ Thanks for Info & help, to:
 
 * Small Device C Compiler (SDCC) v3.9 http://sdcc.sourceforge.net/
 * Hex2bin v2.2 (for test program) http://hex2bin.sourceforge.net/ 
+* VDP TMS9918A SDCC Library (fR3eL) - [MSX-DOS](https://github.com/mvac7/SDCC_TMS9918A_Lib) - [MSX-ROM](https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib)
 
- 
-### TMS9918A Library
-* VDP TMS9918A Library https://github.com/mvac7/SDCC_TMS9918A_Lib
-* VDP TMS9918A MSXROM Library https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib
 
 
 ## Functions
 
-* unsigned int **GetVRAMaddressByPosition** (char column, char line) --> It provides the address of the video memory map tiles, from the screen position indicated.
+* int **GetVRAMaddressByPosition** (char column, char line) --> It provides the address of the video memory map tiles, from the screen position indicated.
 * void **VPRINT** (char column, char line, char* text) --> Prints a string at the indicated screen position.
 * void **VPRINTN** (char column, char line, char* text, unsigned int length) --> Prints a string at the indicated screen position.
 * void **VPrintString** (unsigned int vaddress, char* text) --> Dump the contents of an array of char in a position shown in the video memory.
 * void **VPrintNumber** (char column, char line, unsigned int value, char length) --> Prints a number at the specified position on the screen.
 * void **VPrintNum** (unsigned int vaddr, unsigned int value, char length) --> Prints a number at the specified position on the screen.
 * void **num2Dec16** (unsigned int aNumber, char *address) --> 16-bit Integer to ASCII (adaptation of Baze code)
+
+
+
+## Acknowledgments
+  
+Thanks for Info & help, to:
+
+* Baze [WEB](http://baze.sk/3sc/misc/z80bits.html)
+* Avelino Herrera > [WEB](http://msx.atlantes.org/index_es.html)
+* Nerlaska > [Blog](http://albertodehoyonebot.blogspot.com.es)
+* Marq/Lieves!Tuore > [Marq](http://www.kameli.net/marq/) [Lieves!Tuore](http://www.kameli.net/lt/)
+* [Fubukimaru](https://github.com/Fubukimaru) > [Blog](http://www.gamerachan.org/fubu/)
+* Andrear > [Blog](http://andrear.altervista.org/home/msxsoftware.php)
+* Ramones > [MSXblog](https://www.msxblog.es/tutoriales-de-programacion-en-ensamblador-ramones/) - [MSXbanzai](http://msxbanzai.tni.nl/dev/faq.html)
+* Sapphire/Z80ST > [WEB](http://z80st.auic.es/)
+* Fernando García > [youTube](https://www.youtube.com/user/bitvision)
+* Eric Boez > [gitHub](https://github.com/ericb59)
+* MSX Assembly Page > [WEB](http://map.grauw.nl/resources/msxbios.php)
+* Portar MSX Tech Doc > [WEB](http://nocash.emubase.de/portar.htm)
+* MSX Resource Center > [WEB](http://www.msx.org/)
+* Karoshi MSX Community (RIP 2007-2020)
+* BlueMSX emulator >> [WEB](http://www.bluemsx.com/)
+* OpenMSX emulator >> [WEB](http://openmsx.sourceforge.net/)
+* Meisei emulator >> ?
