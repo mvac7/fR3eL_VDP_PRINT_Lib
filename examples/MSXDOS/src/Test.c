@@ -1,11 +1,10 @@
 /* =============================================================================
-  Test VDP_VPRINT Library
+  Test VDP_PRINT Library
   Version: 1 (10/09/2020)
-  Author: mvac7
+  Author: mvac7 [mvac7303b@gmail.com]
   Architecture: MSX
   Format: .COM (MSX-DOS)
   Programming language: C
-  mail: mvac7303b@gmail.com
     
 History of versions: 
  - v1.0 (25/02/2017) First version
@@ -18,7 +17,7 @@ History of versions:
 
 #include "../include/memory.h"
 #include "../include/VDP_TMS9918A.h"
-#include "../include/VDP_VPRINT.h"
+#include "../include/VDP_PRINT.h"
 
 
 
@@ -56,8 +55,8 @@ void test();
 
 
 // constants  ------------------------------------------------------------------
-const char text01[] = "Test VPRINT library v1.0";
-const char text02[] = "VDP_VPRINT Lib v1.1";
+const char text01[] = "Test VDP PRINT library v1.0";
+const char text02[] = "VDP_PRINT Lib v1.1";
 
 
 // Project: mvac7_font_v0.2

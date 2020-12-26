@@ -1,4 +1,4 @@
-# VDP VPRINT MSX SDCC Library (fR3eL Project)
+# VDP PRINT MSX SDCC Library (fR3eL Project)
 
 ```
 Author: mvac7 [mvac7303b@gmail.com]
@@ -32,7 +32,7 @@ You can use it in its entirety or part of its functions in your projects.
 
 I have adapted a routine for converting a 16 Bits value to ASCII, extracted from the Baze collection [(WEB)](http://baze.sk/3sc/misc/z80bits.html#5.1), for printing numbers. 
 
-It includes an application created to test the library, but it can also be used to learn how to use it.
+In the source code (\examples), two applications are included for testing and learning purposes.
 
 ![TEST_0000](https://user-images.githubusercontent.com/5410950/94546159-cc676e80-024d-11eb-9359-ff5692c859bc.png)
 

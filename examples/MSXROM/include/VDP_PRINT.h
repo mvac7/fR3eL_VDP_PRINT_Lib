@@ -1,17 +1,9 @@
 /* =============================================================================
-   SDCC VDP_VPRINT Lib v1.1 (9/Sep/2020)
-   Author: mvac7
-   Architecture: MSX
-   Format: .rel (SDCC object file)
-   Programming language: C
-   
-   Description:
+  VDP PRINT MSX SDCC Library (fR3eL Project)
+
+  Description:
      Functions Library for display text strings in the graphic modes of the 
-     TMS9918A (G1 and G2).
-     
-   History of versions:
-   - v1.1 (9/Sep/2020) <<current version>>
-   - v1   (4/Feb/2016) First version     
+     TMS9918A (G1 and G2).   
 ============================================================================= */
 #ifndef __VPRINT_H__
 #define __VPRINT_H__

@@ -13,7 +13,7 @@
    - v1.1 (9/Sep/2020) <<current version>>
    - v1   (4/Feb/2016) First version     
 ============================================================================= */
-#include "../include/VDP_VPRINT.h"
+#include "../include/VDP_PRINT.h"
 #include "../include/VDP_TMS9918A.h"
 
 

@@ -1,6 +1,6 @@
 @echo off
 REM SDCC OBJ MAKEFILE
-SET CFILENAME=VDP_VPRINT
+SET CFILENAME=VDP_PRINT
 if exist build\ goto NEXTSTEP1
 echo MAKEDIR build
 md build

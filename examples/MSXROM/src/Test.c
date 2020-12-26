@@ -1,12 +1,11 @@
 /* =============================================================================
   Test VDP_VPRINT Library
   Version: 1.2 (10 September 2020)
-  Author: mvac7
+  Author: mvac7 [mvac7303b@gmail.com]
   Architecture: MSX
   Format: ROM
   Programming language: C
-  mail: mvac7303b@gmail.com
-   
+    
   Description:
   
    
@@ -21,7 +20,7 @@
 #include "../include/msxBIOS.h"
 
 #include "../include/VDP_TMS9918A.h"
-#include "../include/VDP_VPRINT.h"
+#include "../include/VDP_PRINT.h"
 
 
 
@@ -50,8 +49,8 @@ char INKEY();
 
 // constants  ------------------------------------------------------------------
 
-const char text01[] = "Test VPRINT library v1.2";
-const char text02[] = "VDP_VPRINT Lib v1.1";
+const char text01[] = "Test VDP PRINT library v1.2";
+const char text02[] = "VDP_PRINT Lib v1.1";
 
 
 
