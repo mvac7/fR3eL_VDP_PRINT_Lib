@@ -1,4 +1,4 @@
+/_referencias/*
 **/build/*
-/_Releases/*
 **/old/*
-**/tmp/*
+**/_tmp/*

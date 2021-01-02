@@ -18,8 +18,8 @@ Programming language: C and Z80 assembler
 Functions for display text strings in the graphic modes of the TMS9918A (G1 and G2).
 
 Requires the VDP TMS9918A Library: 
-- for MSX-DOS https://github.com/mvac7/SDCC_TMS9918A_Lib
-- or for MSX ROM https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib
+- for MSX-DOS and ROM https://github.com/mvac7/SDCC_TMS9918A_Lib
+- only for MSX ROM https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib
 
 This library does not use any of the MSX BIOS functions, so it is suitable for creating applications for MSXDOS and ROM format.
   
@@ -32,7 +32,7 @@ You can use it in its entirety or part of its functions in your projects.
 
 I have adapted a routine for converting a 16 Bits value to ASCII, extracted from the Baze collection [(WEB)](http://baze.sk/3sc/misc/z80bits.html#5.1), for printing numbers. 
 
-In the source code (\examples), two applications are included for testing and learning purposes.
+In the source code (\examples), you can find applications for testing and learning purposes.
 
 ![TEST_0000](https://user-images.githubusercontent.com/5410950/94546159-cc676e80-024d-11eb-9359-ff5692c859bc.png)
 
@@ -52,7 +52,7 @@ Enjoy it!
 
 * Small Device C Compiler (SDCC) v3.9 http://sdcc.sourceforge.net/
 * Hex2bin v2.5 http://hex2bin.sourceforge.net/
-* VDP TMS9918A SDCC Library (fR3eL) - [MSX-DOS](https://github.com/mvac7/SDCC_TMS9918A_Lib) - [MSX-ROM](https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib)
+* VDP TMS9918A SDCC Library (fR3eL) - [MSX-DOS/ROM](https://github.com/mvac7/SDCC_TMS9918A_Lib) - [MSX-ROM](https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib)
 
 
 

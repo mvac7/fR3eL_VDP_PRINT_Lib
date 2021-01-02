@@ -1,5 +1,5 @@
 /* =============================================================================
-  Test VDP_VPRINT Library
+  Test VDP VPRINT MSX SDCC Library
   Version: 1.2 (10 September 2020)
   Author: mvac7 [mvac7303b@gmail.com]
   Architecture: MSX
@@ -7,7 +7,7 @@
   Programming language: C
     
   Description:
-  
+     Application for test the VDP VPRINT MSX SDCC Library
    
   History of versions:
     - v1.2 (10 September 2020)
@@ -19,7 +19,7 @@
 #include "../include/msxSystemVariables.h"
 #include "../include/msxBIOS.h"
 
-#include "../include/VDP_TMS9918A.h"
+#include "../include/VDP_TMS9918A_MSXROM.h"
 #include "../include/VDP_PRINT.h"
 
 
@@ -49,8 +49,8 @@ char INKEY();
 
 // constants  ------------------------------------------------------------------
 
-const char text01[] = "Test VDP PRINT library v1.2";
-const char text02[] = "VDP_PRINT Lib v1.1";
+const char text01[] = "Test VDP PRINT v1.2";
+const char text02[] = "VDP PRINT MSX SDCC Lib v1.1";
 
 
 
