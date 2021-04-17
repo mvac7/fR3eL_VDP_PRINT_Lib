@@ -34,7 +34,7 @@ I have adapted a routine for converting a 16 Bits value to ASCII, extracted from
 
 In the source code (\examples), you can find applications for testing and learning purposes.
 
-![TEST_0000](https://user-images.githubusercontent.com/5410950/94546159-cc676e80-024d-11eb-9359-ff5692c859bc.png)
+![TEST_0000](https://raw.githubusercontent.com/mvac7/SDCC_VDP_PRINT_Lib/master/GFX/TEST_0000.png)
 
 This library is part of the [MSX fR3eL Project](https://github.com/mvac7/SDCC_MSX_fR3eL).
 
@@ -43,7 +43,8 @@ Enjoy it!
 
 
 ## History of versions
-* v1.1 (9/Sep/2020) **<current version>**
+* v1.2 (16/April/2021) VPRINTN string size control
+* v1.1 (9/Sep/2020)
 * v1   (4/Feb/2016) First version
 
 
@@ -76,7 +77,7 @@ I want to give a special thanks to all those who freely share their knowledge wi
 * Avelino Herrera > [WEB](http://msx.atlantes.org/index_es.html)
 * Nerlaska > [Blog](http://albertodehoyonebot.blogspot.com.es)
 * Marq/Lieves!Tuore > [Marq](http://www.kameli.net/marq/) [Lieves!Tuore](http://www.kameli.net/lt/)
-* [Fubukimaru](https://github.com/Fubukimaru) > [Blog](http://www.gamerachan.org/fubu/)
+* Fubukimaru [gitHub](https://github.com/Fubukimaru)
 * Andrear > [Blog](http://andrear.altervista.org/home/msxsoftware.php)
 * Ramones > [MSXblog](https://www.msxblog.es/tutoriales-de-programacion-en-ensamblador-ramones/) - [MSXbanzai](http://msxbanzai.tni.nl/dev/faq.html)
 * Sapphire/Z80ST > [WEB](http://z80st.auic.es/)

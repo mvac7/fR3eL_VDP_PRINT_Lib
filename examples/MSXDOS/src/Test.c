@@ -56,7 +56,7 @@ void test();
 
 // constants  ------------------------------------------------------------------
 const char text01[] = "Test VDP PRINT library v1.0";
-const char text02[] = "VDP_PRINT Lib v1.1";
+const char text02[] = "VDP_PRINT Lib v1.2";
 
 
 // Project: mvac7_font_v0.2

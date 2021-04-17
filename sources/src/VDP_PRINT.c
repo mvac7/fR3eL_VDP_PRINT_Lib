@@ -1,5 +1,5 @@
 /* =============================================================================
-   SDCC VDP_VPRINT Lib v1.1 (9/Sep/2020)
+   SDCC VDP PRINT Lib v1.2 (16/April/2021)
    Author: mvac7
    Architecture: MSX
    Format: .rel (SDCC object file)
@@ -10,7 +10,8 @@
      TMS9918A (G1 and G2).
      
    History of versions:
-   - v1.1 (9/Sep/2020) <<current version>>
+   - v1.2 (16/April/2021) VPRINTN string size control
+   - v1.1 (9/Sep/2020) 
    - v1   (4/Feb/2016) First version     
 ============================================================================= */
 #include "../include/VDP_PRINT.h"
@@ -64,7 +65,9 @@ void VPRINT(char column, char line, char* text)
 void VPRINTN(char column, char line, char* text, unsigned int length)
 {
   unsigned int vaddr = GetVRAMaddressByPosition(column, line);
-  CopyToVRAM((unsigned int) text, vaddr, length);
+  //CopyToVRAM((unsigned int) text, vaddr, length);
+  while(*(text) && length-->0)  VPOKE(vaddr++,*(text++));
+
 }
 
 

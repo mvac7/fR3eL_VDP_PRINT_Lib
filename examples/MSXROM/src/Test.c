@@ -50,7 +50,7 @@ char INKEY();
 // constants  ------------------------------------------------------------------
 
 const char text01[] = "Test VDP PRINT v1.2";
-const char text02[] = "VDP PRINT MSX SDCC Lib v1.1";
+const char text02[] = "VDP PRINT MSX SDCC Lib v1.2";
 
 
 
