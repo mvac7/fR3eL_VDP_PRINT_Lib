@@ -130,7 +130,7 @@ VPRINT("Alea iacta est");
 <tr><td colspan="2">16-bit Integer to ASCII (adaptation of Baze code)</td></tr>
 <tr><th>Function</th><td>num2Dec16(value, text)</td></tr>
 <tr><th>Input</th><td>
-- value (unsigned int)  
+- value (unsigned int)<br/>  
 - *text (unsigned int) pointer to the string where the number is to be translated
 </td></tr>
 <tr><th>Output</th><td> --- </td></tr>
