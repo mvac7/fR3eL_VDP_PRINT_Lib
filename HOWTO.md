@@ -71,8 +71,8 @@ for the indicated screen position.
 </td></tr>
 <tr><th>Function</th><td>VLOCATE(column, line)</td></tr>
 <tr><th>Input</th><td>
-- column (byte) 0 - 31<br/>
-- line (byte) 0 - 23
+- column (char) 0 - 31<br/>
+- line (char) 0 - 23
 </td></tr>
 <tr><th>Output</th><td>[unsigned int] VRAM address</td></tr>
 <tr><th>Examples:</th>
@@ -90,10 +90,10 @@ Places it in the position indicated by VLOCATE or in the last printed position.
 <tr><th>Input</th><td>[char*] string</td></tr>
 <tr><th>Output</th><td> --- </td></tr>
 <tr><th>Examples:</th>
-<td><code>
+<td><pre>
 VLOCATE(3,4);<br/>
 VPRINT("Alea iacta est");
-</code></td></tr>
+</pre></td></tr>
 </table>
 
 
@@ -135,11 +135,11 @@ VPRINT("Alea iacta est");
 </td></tr>
 <tr><th>Output</th><td> --- </td></tr>
 <tr><th>Examples:</th>
-<td><code>
+<td><pre>
 unsigned int value=1234;<br/>
 char text[]="     ";<br/>
 num2Dec16(value, text);
-</code></td></tr>
+</pre></td></tr>
 </table>
 
 
