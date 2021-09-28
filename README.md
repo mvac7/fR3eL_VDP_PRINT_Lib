@@ -1,7 +1,7 @@
 # VDP PRINT MSX SDCC Library (fR3eL Project)
 
 ```
-Author: mvac7 [mvac7303b@gmail.com]
+Author: mvac7
 Architecture: MSX
 Format: C Object (SDCC .rel)
 Programming language: C and Z80 assembler
@@ -17,20 +17,21 @@ Programming language: C and Z80 assembler
 
 Functions for display text strings in the graphic modes of the TMS9918A (G1 and G2).
 
-Requires the VDP TMS9918A Library: 
+Requires the VDP TMS9918A Library to write to the VRAM and so that you can start the graphics modes.
 - for MSX-DOS and ROM https://github.com/mvac7/SDCC_TMS9918A_Lib
 - only for MSX ROM https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib
 
-This library does not use any of the MSX BIOS functions, so it is suitable for creating applications for MSXDOS and ROM format.
-  
-Use them for developing MSX applications using Small Device C Compiler (SDCC) compilator.
-
-It is adapted to work with the standard MSX screen configurations but it can be changed to the VRAM addresses of other computers or video game consoles.
-
-This open-source project is for the MSX developer community and retro scene.
-You can use it in its entirety or part of its functions in your projects.
+This library does not use any of the MSX BIOS functions, so it is suitable for creating applications for MSX-DOS and ROM format.
 
 I have adapted a routine for converting a 16 Bits value to ASCII, extracted from the Baze collection [(WEB)](http://baze.sk/3sc/misc/z80bits.html#5.1), for printing numbers. 
+  
+It is adapted to work with the standard MSX screen configurations but it can be changed to the VRAM addresses of other computers or video game consoles.
+
+This project is an Open Source library. You can add part or all of this code in your libraries/engines.
+
+Use them for developing MSX applications using Small Device C Compiler (SDCC).
+
+You can access the documentation here with [How to use the library](https://github.com/mvac7/SDCC_VDP_PRINT_Lib/blob/master//HOWTO.md).
 
 In the source code (\examples), you can find applications for testing and learning purposes.
 
@@ -43,29 +44,19 @@ Enjoy it!
 
 
 ## History of versions
-* v1.2 (16/April/2021) VPRINTN string size control
-* v1.1 (9/Sep/2020)
-* v1   (4/Feb/2016) First version
+
+- v1.3 (27/September/2021) Add VLOCATE; Remove VPrintString and VPrintNum
+- v1.2 (16/April/2021) VPRINTN string size control
+- v1.1 (9/September/2020)
+- v1   (4/February/2016) First version
 
 
 
 ## Requirements
 
-* Small Device C Compiler (SDCC) v3.9 http://sdcc.sourceforge.net/
-* Hex2bin v2.5 http://hex2bin.sourceforge.net/
-* VDP TMS9918A SDCC Library (fR3eL) - [MSX-DOS/ROM](https://github.com/mvac7/SDCC_TMS9918A_Lib) - [MSX-ROM](https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib)
-
-
-
-## Functions
-
-* int **GetVRAMaddressByPosition** (char column, char line) --> It provides the address of the video memory map tiles, from the screen position indicated.
-* void **VPRINT** (char column, char line, char* text) --> Prints a string at the indicated screen position.
-* void **VPRINTN** (char column, char line, char* text, unsigned int length) --> Prints a string at the indicated screen position.
-* void **VPrintString** (unsigned int vaddress, char* text) --> Dump the contents of an array of char in a position shown in the video memory.
-* void **VPrintNumber** (char column, char line, unsigned int value, char length) --> Prints a number at the specified position on the screen.
-* void **VPrintNum** (unsigned int vaddr, unsigned int value, char length) --> Prints a number at the specified position on the screen.
-* void **num2Dec16** (unsigned int aNumber, char *address) --> 16-bit Integer to ASCII (adaptation of Baze code)
+- [Small Device C Compiler (SDCC) v4.1](http://sdcc.sourceforge.net/)
+- [Hex2bin v2.5](http://hex2bin.sourceforge.net/)
+- VDP TMS9918A SDCC Library (fR3eL) - [MSX-DOS/ROM](https://github.com/mvac7/SDCC_TMS9918A_Lib) - [MSX-ROM](https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib)
 
 
 
@@ -73,20 +64,23 @@ Enjoy it!
   
 I want to give a special thanks to all those who freely share their knowledge with the MSX developer community.
 
-* Baze > [WEB](http://baze.sk/3sc/misc/z80bits.html)
-* Avelino Herrera > [WEB](http://msx.atlantes.org/index_es.html)
-* Nerlaska > [Blog](http://albertodehoyonebot.blogspot.com.es)
-* Marq/Lieves!Tuore > [Marq](http://www.kameli.net/marq/) [Lieves!Tuore](http://www.kameli.net/lt/)
-* Fubukimaru [gitHub](https://github.com/Fubukimaru)
-* Andrear > [Blog](http://andrear.altervista.org/home/msxsoftware.php)
-* Ramones > [MSXblog](https://www.msxblog.es/tutoriales-de-programacion-en-ensamblador-ramones/) - [MSXbanzai](http://msxbanzai.tni.nl/dev/faq.html)
-* Sapphire/Z80ST > [WEB](http://z80st.auic.es/)
-* Fernando García > [youTube](https://www.youtube.com/user/bitvision)
-* Eric Boez > [gitHub](https://github.com/ericb59)
-* MSX Assembly Page > [WEB](http://map.grauw.nl/resources/msxbios.php)
-* Portar MSX Tech Doc > [WEB](http://nocash.emubase.de/portar.htm)
-* MSX Resource Center > [WEB](http://www.msx.org/)
-* Karoshi MSX Community (RIP 2007-2020)
-* BlueMSX emulator >> [WEB](http://www.bluemsx.com/)
-* OpenMSX emulator >> [WEB](http://openmsx.sourceforge.net/)
-* Meisei emulator >> ?
+- Baze > [(WEB)](http://baze.sk/3sc/misc/z80bits.html)
+- Avelino Herrera > [(WEB)](http://msx.avelinoherrera.com/index_es.html)
+- Nerlaska > [(Blog)](http://albertodehoyonebot.blogspot.com.es)
+- Marq > [(Marq)](http://www.kameli.net/marq/)
+- MSXKun/Paxanga soft > [(WEB)](http://paxangasoft.retroinvaders.com/)
+- Fubukimaru [(gitHub)](https://github.com/Fubukimaru)
+- Andrear > [(Blog)](http://andrear.altervista.org/home/msxsoftware.php)
+- Sapphire/Z80ST > [(WEB)](http://z80st.auic.es/)
+- Fernando García > [(Curso)](http://www.z80st.es/cursos/bitvision-assembler)
+- Ramones > [(MSXblog)](https://www.msxblog.es/tutoriales-de-programacion-en-ensamblador-ramones/) - [(MSXbanzai)](http://msxbanzai.tni.nl/dev/faq.html)
+- Eric Boez > [(gitHub)](https://github.com/ericb59)
+- MSX Assembly Page > [(WEB)](http://map.grauw.nl/resources/msxbios.php)
+- Portar MSX Tech Doc > [(WEB)](https://problemkaputt.de/portar.htm)
+- MSX Resource Center > [(WEB)](http://www.msx.org/)
+- Karoshi MSX Community > [(WEB)](http://karoshi.auic.es/)
+- BlueMSX emulator >> [(WEB)](http://www.bluemsx.com/)
+- OpenMSX emulator >> [(WEB)](http://openmsx.sourceforge.net/)
+- [WebMSX](https://webmsx.org/) emulator by Paulo A. Peccin >> [(gitHub)](https://github.com/ppeccin/webmsx)
+- fMSX emulator by Marat Fayzullin [WEB](https://fms.komkon.org/fMSX/)
+- Meisei emulator by Hap >> ?

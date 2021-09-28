@@ -1,145 +1,137 @@
 /* =============================================================================
-   SDCC VDP PRINT Lib v1.2 (16/April/2021)
+   SDCC VDP PRINT MSX SDCC Library (fR3eL Project) 
+   Version: 1.3 (27/September/2021)
    Author: mvac7
    Architecture: MSX
-   Format: .rel (SDCC object file)
-   Programming language: C
+   Format: C Object (SDCC .rel)
+   Programming language: C and Z80 assembler
    
    Description:
      Functions Library for display text strings in the graphic modes of the 
      TMS9918A (G1 and G2).
      
-   History of versions:
-   - v1.2 (16/April/2021) VPRINTN string size control
-   - v1.1 (9/Sep/2020) 
-   - v1   (4/Feb/2016) First version     
+History of versions:
+- v1.3 (27/September/2021) Add VLOCATE, Remove VPrintString and VPrintNum
+- v1.2 (16/April/2021) VPRINTN string size control
+- v1.1 (9/September/2020) 
+- v1   (4/February/2016) First version     
 ============================================================================= */
 #include "../include/VDP_PRINT.h"
 #include "../include/VDP_TMS9918A.h"
 
 
-char CSTATE;
+char CSTATE;  //value needed to control the start of a number (num2Dec16)
+
+unsigned int VVRAMaddr;
+
 
 
 
 /* =============================================================================
- It provides the address of the video memory map tiles, from the screen position
- indicated.
-
- Inputs:
-   column (byte) 0 - 31
-   line (byte) 0 - 23
+  VLOCATE
+  
+  Description:
+    Moves the cursor to the specified location and optionally 
+    provides the VRAM address from the pattern name table, 
+    for the indicated screen position.
+  
+  Inputs:
+    column (byte) 0 - 31
+    line (byte) 0 - 23
+    
+  Outputs:
+    [unsigned int] VRAM address
 ============================================================================= */
-unsigned int GetVRAMaddressByPosition(char column, char line)
+unsigned int VLOCATE(char column, char line)
 {
-   return BASE10 + (line*32)+column;
+    VVRAMaddr = BASE10 + (line*32)+column;
+    return VVRAMaddr;
 }
 
 
 
 /* =============================================================================
- Prints a string at the indicated screen position
-
+  VPRINT
+  
+  Description:
+    Prints a string of characters on the screen.
+    Places it in the position indicated by VLOCATE or in the last printed position.
+    
  Inputs:
-   column (byte) 0 - 31
-   line (byte) 0 - 23
-   text (char*) string
+    [char*] string 
 ============================================================================= */
-void VPRINT(char column, char line, char* text)
-{
-  unsigned int vaddr = GetVRAMaddressByPosition(column, line);
-  VPrintString(vaddr, text);
-}
-
-
-
-/* =============================================================================
- Prints a string at the indicated screen position
-
- Inputs:
-   column (byte) 0 - 31
-   line (byte) 0 - 23
-   text (char*) string
-   length (uint) length of the string to print
-============================================================================= */
-void VPRINTN(char column, char line, char* text, unsigned int length)
-{
-  unsigned int vaddr = GetVRAMaddressByPosition(column, line);
-  //CopyToVRAM((unsigned int) text, vaddr, length);
-  while(*(text) && length-->0)  VPOKE(vaddr++,*(text++));
-
-}
-
-
-
-/* =============================================================================
- Dump the contents of an array of char in a position shown in the video memory
-
- Inputs:
-   vaddr (uint) 
-   text (char*) array
-============================================================================= */
-void VPrintString(unsigned int vaddr, char* text)
+void VPRINT(char* text)
 {
   char length=0;
   while(text[length]) length++;
-  //while(*(text)) VPOKE(vaddr++,*(text++));
-  CopyToVRAM((unsigned int) text, vaddr, length);
+  //while(*(text)) VPOKE(VVRAMaddr++,*(text++));
+  CopyToVRAM((unsigned int) text, VVRAMaddr, length);
+  VVRAMaddr += length;
 }
 
 
 
 /* =============================================================================
-   VPrintNumber
-   Prints a number at the specified position on the screen.
-   
-   Inputs:
-     [char] column 0 - 31
-     [char] line   0 - 23
-     [unsigned int] number
-     [char] length
+  VPRINTN
+
+  Description:
+    Prints a character string with a limited length on the screen.
+
+ Inputs:
+    text (char*) string
+    length (unsigned int) length of the string to print
 ============================================================================= */
-void VPrintNumber(char column, char line, unsigned int value, char length)
+void VPRINTN(char* text, unsigned int length)
 {
-  unsigned int vaddr = GetVRAMaddressByPosition(column, line);
-
-  VPrintNum(vaddr, value, length);
+  char size=0;
+  while(text[size]) size++;
+  if (length>size) length=size;
+  CopyToVRAM((unsigned int) text, VVRAMaddr, length);
+  //while(*(text) && length-->0)  VPOKE(VVRAMaddr++,*(text++));
+  VVRAMaddr += length;
 }
 
 
+
 /* =============================================================================
-   VPrintNum
-   Prints a number at the specified position on the screen.
+  VPrintNumber
+  
+  Description:
+    Prints a number.
    
-   Inputs:
-     [unsigned int] VRAM address in Pattern Name Table.
-     [unsigned int] number
-     [char] length
+  Inputs:
+    [unsigned int] number
+    [char] length
 ============================================================================= */
-void VPrintNum(unsigned int vaddr, unsigned int value, char length)
+void VPrintNumber(unsigned int value, char length)
 {
   char pos=5-length;
   char text[]="     ";
 
   num2Dec16(value, text); 
   
-  //while (length-->0){ VPOKE(vaddr++,text[pos++]);}
-  CopyToVRAM((unsigned int) text + (5-length), vaddr, length);
+  //while (length-->0){ VPOKE(VVRAMaddr++,text[pos++]);}
+  CopyToVRAM((unsigned int) text + (5-length), VVRAMaddr, length);
+  VVRAMaddr += length;
 }
 
 
 
 /* =============================================================================
- 16-bit Integer to ASCII (decimal)
- original code by baze http://baze.sk/3sc/misc/z80bits.html#5.1
- (update) Add functionality to replace leading zeros by spaces.  
- Input: HL = number to convert, DE = location of ASCII string
- Output: ASCII string at (DE)
+  num2Dec16
+
+  16-bit Integer to ASCII (decimal)
+  original code by baze http://baze.sk/3sc/misc/z80bits.html#5.1
+  (update) Add functionality to replace leading zeros by spaces.  
+  
+  Inputs:
+    - value (unsigned int)  
+    - *address (unsigned int) pointer to the string where the number is to be translated 
 ============================================================================= */
-void num2Dec16(unsigned int aNumber, char *address) __naked
+void num2Dec16(unsigned int value, char *text) __naked
 {
-  aNumber;
-  address;
+value;
+text;
 __asm
   push IX
   ld   IX,#0
@@ -162,10 +154,13 @@ __asm
   call $Num1
   ld   C,#-10
   call $Num1
+  
   ld   C,B
+  ld   A,#48          ;"0"
+  ld   (#_CSTATE),A
   call $Num1
 
-  ;END
+;END
   pop  IX
   ret
     
@@ -204,14 +199,14 @@ __endasm;
 
 /*void VPRINTO(byte column, byte line, char* text, char offset)
 {
-  uint vaddr = GetVRAMaddressByPosition(column, line);
-  vpokeBlockOffset(vaddr, text,offset);
+  uint VVRAMaddr = GetVRAMaddressByPosition(column, line);
+  vpokeBlockOffset(VVRAMaddr, text,offset);
 }*/
 
 
-/*void vpokeBlockOffset(uint vaddr, char* text, char offset)
+/*void vpokeBlockOffset(uint VVRAMaddr, char* text, char offset)
 {
-  while(*(text)) vpoke(vaddr++,*(text++)+offset);
+  while(*(text)) vpoke(VVRAMaddr++,*(text++)+offset);
 }*/
 
 
@@ -223,7 +218,7 @@ __endasm;
 /*void vprintLines(byte column, byte line, char* text)
 {
   char character;
-  uint vaddr = GetVRAMaddressByPosition(column, line);
+  uint VVRAMaddr = GetVRAMaddressByPosition(column, line);
 
   while(*(text))
   {
@@ -232,10 +227,10 @@ __endasm;
     {
       //next line
       line++;
-      vaddr = GetVRAMaddressByPosition(0, line);
+      VVRAMaddr = GetVRAMaddressByPosition(0, line);
     }
     else{
-      vpoke(vaddr++,character);
+      vpoke(VVRAMaddr++,character);
     }    
   }
   return;

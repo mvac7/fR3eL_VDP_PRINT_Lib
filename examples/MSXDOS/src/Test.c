@@ -1,13 +1,15 @@
 /* =============================================================================
-  Test VDP_PRINT Library
-  Version: 1 (10/09/2020)
-  Author: mvac7 [mvac7303b@gmail.com]
+  Test VDP PRINT MSX SDCC Library v1.3
+  Version: 1.2 (28 September 2021)
+  Author: mvac7
   Architecture: MSX
   Format: .COM (MSX-DOS)
-  Programming language: C
+  Programming language: C and z80 assembler
     
-History of versions: 
- - v1.0 (25/02/2017) First version
+History of versions:
+- v1.2 (28 September 2021) Changes from library v1.3 (VLOCATE)
+- v1.1 (10/09/2020) 
+- v1.0 (25/02/2017) First version
 ============================================================================= */
 
 #include "../include/newTypes.h"
@@ -43,7 +45,6 @@ void System(char code);
 void SCREEN0();
 void SCREEN1();
 
-void LOCATE(char x, char y);
 void PRINT(char* text);
 
 void test_SC1();
@@ -55,8 +56,8 @@ void test();
 
 
 // constants  ------------------------------------------------------------------
-const char text01[] = "Test VDP PRINT library v1.0";
-const char text02[] = "VDP_PRINT Lib v1.2";
+const char text01[] = "Test v1.2";
+const char text02[] = "VDP_PRINT Library v1.3";
 
 
 // Project: mvac7_font_v0.2
@@ -157,11 +158,7 @@ void main(void)
  
   test_SC2();
 
-
-  
-
-  
-  
+ 
      
 //EXIT MSXDOS ------------------------------------------------------------------
   //put the screen as it was.
@@ -280,39 +277,6 @@ void TwoSeconds()
 
 
 /* =============================================================================
-   Set a position the cursor in to the specified location
-   Posiciona el cursor hasta la ubicacion especificada
-   x(byte) - column (0 to 31 or 39)
-   y(byte) - line   (0 to 23)
-============================================================================= */
-void LOCATE(char x, char y)
-{
-x;y;
-__asm
-  push IX
-  ld   IX,#0
-  add  IX,SP
-  
-  ld   A,4(IX) ;x
-  inc  A       ;incrementa las posiciones para que se situen correctamente en la pantalla
-  ld   H,A
-  ld   A,5(IX) ;y
-  inc  A
-  ld   L,A
-     
-  ;call POSIT
-  ld   IX,#POSIT
-  ld   IY,(#EXPTBL-1)
-  call CALSLT ;acces to MSX BIOS
-  
-  pop  IX
-__endasm;
-
-}
-
-
-
-/* =============================================================================
    Print a text in screen
 ============================================================================= */
 void PRINT(char* text)
@@ -350,25 +314,22 @@ __endasm;
 // TEST 
 void test_SC1()
 {
-  //LOCATE(0,0);
-  
-  //COLOR(LIGHT_GREEN,DARK_GREEN,DARK_GREEN);    
+  COLOR(LIGHT_GREEN,DARK_GREEN,DARK_GREEN);    
   SCREEN(1);
-  FillVRAM(BASE5,0x300,32);
+  FillVRAM(BASE5,0x300,32); //clear the pattern name table 
   
   //copy to VRAM tileset, only gfx patterns
-  CopyToVRAM((uint) TILESET_FONT,BASE7,126*8);  
-  FillVRAM(BASE6,32,0xF4);
-  
-  VPRINT(24,23,"SCREEN 1");
+  CopyToVRAM((uint) TILESET_FONT,BASE7,126*8);
+  FillVRAM(BASE6,32,0x3C);  
+
+  VLOCATE(24,23);
+  VPRINT("SCREEN 1");
   
   test();
   
-  VPRINT(0,22,"Press any key");
-  //LOCATE(14,22);
-  INKEY();  
- 
-  return;
+  VLOCATE(0,22);
+  VPRINT("Press any key");
+  INKEY();
 }
 
 
@@ -377,72 +338,85 @@ void test_SC2()
 {
   COLOR(15,4,14);    
   SCREEN(2);
-  
-  FillVRAM(BASE10,0x800,32); //CLS
+  FillVRAM(BASE10,0x300,32);
   
   //copy to VRAM tileset,  gfx patterns
   CopyToVRAM((uint) TILESET_FONT,BASE12,126*8);
   CopyToVRAM((uint) TILESET_FONT,BASE12+BANK1,126*8);
   CopyToVRAM((uint) TILESET_FONT,BASE12+BANK2,126*8); 
   
-  FillVRAM(BASE11,0x1800,0xF4);  //Fill all the tiles with the same color
+  FillVRAM(BASE11,0x1800,0xF4); 
   
-  VPRINT(24,23,"SCREEN 2");
+  VLOCATE(24,23);
+  VPRINT("SCREEN 2");
   
   test();  
   
-  VPRINT(0,22,"Press a key to exit");
-  INKEY();  
- 
-  return;
+  VLOCATE(0,22);
+  VPRINT("Press a key to exit");
+  INKEY();
 }
 
 
 
 void test()
 {
-  uint vaddr;
-
-  //VPRINT(0,0,text01);
-  //VPRINT(0,1,text02);  
-  //TwoSeconds();
-        
-  VPRINT(0,3,">Test VPRINT");
+//  uint vaddr;
+  
+  VLOCATE(0,0);
+  VPRINT(text01);
+  VLOCATE(0,1);
+  VPRINT(text02);  
   TwoSeconds();
-  VPRINT(3,4,"Alea iacta est");
+    
+  VLOCATE(0,3);
+  VPRINT(">Test VLOCATE(3,4) + VPRINT()");
+  TwoSeconds();
+  VLOCATE(3,4);
+  VPRINT("Alea iacta est");
   TwoSeconds();
   
-  VPRINT(0,6,">Test VPRINTN [10 chars]");
+  VLOCATE(0,6);
+  VPRINT(">Test VPRINTN [10 chars]");
   TwoSeconds();
-  VPRINTN(3,7,"Alea iacta est",10);
-  TwoSeconds();
-  
-  VPRINT(0,9,">test GetVRAMaddressByPosition()");
-  TwoSeconds();
-  vaddr = GetVRAMaddressByPosition(5,10);
-  VPrintString(vaddr,"col=5, line=10");
+  VLOCATE(3,7);
+  VPRINTN("Alea iacta est",10);
   TwoSeconds();
 
-/*en vez de utilizar coordenadas de pantalla, se puede calcular la posicion de
-la VRAM y utilizar la función VPrintString. Al no tener que calcular la dirección
-la ejecucion sera más rapida*/   
-  VPRINT(0,12,">test VPrintString()");
+
+// 
+  VLOCATE(0,9);
+  VPRINT(">test VPRINT + VPRINT");
+  TwoSeconds();
+  VLOCATE(0,10);
+  VPRINT("Aut viam ");
+  TwoSeconds();
+  VPRINT("inveniam aut faciam");
+  TwoSeconds();
+
+  
+  VLOCATE(0,12);
+  VPRINT(">VVRAMaddr = BASE10+(13*32)+10");
   TwoSeconds(); 
-  vaddr = BASE10 + (13*32)+3;
-  VPrintString(vaddr,"Ad infinitum");
+  VVRAMaddr = BASE10 + (13*32)+10;  //y=13;x=10
+  VPRINT("Ad infinitum");
   TwoSeconds();  
   
-  VPRINT(0,15,">Test VPrintNumber(3,16,255,3)");
+  VLOCATE(0,15);
+  VPRINT(">Test VPrintNumber(255,3)");
   TwoSeconds();
-  VPrintNumber(3,16,255,3);
-  TwoSeconds();
+  VLOCATE(3,16);
+  VPrintNumber(255,3);
+  TwoSeconds();  
   
-  VPRINT(0,18,">Test VPrintNum(vaddr,1234,5)");
+  VLOCATE(0,18);
+  VPRINT(">Test VPrintNum(1234,5)+VPRINT");
   TwoSeconds();
-  vaddr = BASE10 + (19*32)+3;
-  VPrintNum(vaddr,1234,5);
+  VLOCATE(0,19);
+  VPRINT("Number:");
+  VPrintNumber(1234,5);
+  VPRINT(" Bytes");
   TwoSeconds();
-
 }
 
 

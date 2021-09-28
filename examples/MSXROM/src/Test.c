@@ -1,18 +1,19 @@
 /* =============================================================================
-  Test VDP VPRINT MSX SDCC Library
-  Version: 1.2 (10 September 2020)
-  Author: mvac7 [mvac7303b@gmail.com]
+  Test VDP PRINT MSX SDCC Library v1.3
+  Version: 1.3 (27 September 2021)
+  Author: mvac7
   Architecture: MSX
   Format: ROM
-  Programming language: C
+  Programming language: C and z80 assembler
     
   Description:
      Application for test the VDP VPRINT MSX SDCC Library
    
-  History of versions:
-    - v1.2 (10 September 2020)
-    - v1.1 (09 September 2020)
-    - v1.0 (03 February 2016)
+History of versions:
+- v1.3 (27 September 2021) Changes from library v1.3 (VLOCATE)
+- v1.2 (10 September 2020)
+- v1.1 (09 September 2020)
+- v1.0 (03 February 2016)
 ============================================================================= */
 
 #include "../include/newTypes.h"
@@ -49,8 +50,8 @@ char INKEY();
 
 // constants  ------------------------------------------------------------------
 
-const char text01[] = "Test VDP PRINT v1.2";
-const char text02[] = "VDP PRINT MSX SDCC Lib v1.2";
+const char text01[] = "Test v1.3";
+const char text02[] = "VDP_PRINT Library v1.3";
 
 
 
@@ -139,19 +140,7 @@ void main(void)
   test_SC1();
  
   test_SC2();
-  
 
-//EXIT MSXDOS
-/*  screen(0);
-    
-__asm
- 	ld b,4(ix)
-	ld c,#0x62
-	call 5 
-__endasm;*/
-//end EXIT
-
-  return;
 }
 
 
@@ -196,14 +185,14 @@ void test_SC1()
   //copy to VRAM tileset, only gfx patterns
   CopyToVRAM((uint) TILESET_FONT,BASE7,126*8);  
 
-  VPRINT(24,23,"SCREEN 1");
+  VLOCATE(24,23);
+  VPRINT("SCREEN 1");
   
   test();
   
-  VPRINT(0,22,"Press any key");
-  INKEY();  
- 
-  return;
+  VLOCATE(0,22);
+  VPRINT("Press any key");
+  INKEY();
 }
 
 
@@ -221,60 +210,74 @@ void test_SC2()
   
   FillVRAM(BASE11,0x1800,0xF4); 
   
-  VPRINT(24,23,"SCREEN 2");
+  VLOCATE(24,23);
+  VPRINT("SCREEN 2");
   
   test();  
   
-  VPRINT(0,22,"Press a key to exit");
-  INKEY();  
- 
-  return;
+  VLOCATE(0,22);
+  VPRINT("Press a key to exit");
+  INKEY();
 }
 
 
 
 void test()
 {
-  uint vaddr;
+//  uint vaddr;
   
-  VPRINT(0,0,text01);
-  VPRINT(0,1,text02);  
+  VLOCATE(0,0);
+  VPRINT(text01);
+  VLOCATE(0,1);
+  VPRINT(text02);  
   TwoSeconds();
     
-  VPRINT(0,3,">Test VPRINT");
+  VLOCATE(0,3);
+  VPRINT(">Test VLOCATE(3,4) + VPRINT()");
   TwoSeconds();
-  VPRINT(3,4,"Alea iacta est");
-  TwoSeconds();
-  
-  VPRINT(0,6,">Test VPRINTN [10 chars]");
-  TwoSeconds();
-  VPRINTN(3,7,"Alea iacta est",10);
+  VLOCATE(3,4);
+  VPRINT("Alea iacta est");
   TwoSeconds();
   
-  VPRINT(0,9,">test GetVRAMaddressByPosition()");
+  VLOCATE(0,6);
+  VPRINT(">Test VPRINTN [10 chars]");
   TwoSeconds();
-  vaddr = GetVRAMaddressByPosition(5,10);
-  VPrintString(vaddr,"col=5, line=10");
+  VLOCATE(3,7);
+  VPRINTN("Alea iacta est",10);
   TwoSeconds();
 
-/*en vez de utilizar coordenadas de pantalla, se puede calcular la posicion de
-la VRAM y utilizar la función VPrintString. Al no tener que calcular la dirección
-la ejecucion sera más rapida*/   
-  VPRINT(0,12,">test VPrintString()");
+
+// 
+  VLOCATE(0,9);
+  VPRINT(">test VPRINT + VPRINT");
+  TwoSeconds();
+  VLOCATE(0,10);
+  VPRINT("Aut viam ");
+  TwoSeconds();
+  VPRINT("inveniam aut faciam");
+  TwoSeconds();
+
+  
+  VLOCATE(0,12);
+  VPRINT(">VVRAMaddr = BASE10+(13*32)+10");
   TwoSeconds(); 
-  vaddr = BASE10 + (13*32)+3;
-  VPrintString(vaddr,"Ad infinitum");
+  VVRAMaddr = BASE10 + (13*32)+10;  //y=13;x=10
+  VPRINT("Ad infinitum");
   TwoSeconds();  
   
-  VPRINT(0,15,">Test VPrintNumber(3,16,255,3)");
+  VLOCATE(0,15);
+  VPRINT(">Test VPrintNumber(255,3)");
   TwoSeconds();
-  VPrintNumber(3,16,255,3);
+  VLOCATE(3,16);
+  VPrintNumber(255,3);
   TwoSeconds();  
   
-  VPRINT(0,18,">Test VPrintNum(vaddr,1234,5)");
+  VLOCATE(0,18);
+  VPRINT(">Test VPrintNum(1234,5)+VPRINT");
   TwoSeconds();
-  vaddr = BASE10 + (19*32)+3;
-  VPrintNum(vaddr,1234,5);
+  VLOCATE(0,19);
+  VPRINT("Number:");
+  VPrintNumber(1234,5);
+  VPRINT(" Bytes");
   TwoSeconds();
-
 }
