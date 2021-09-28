@@ -91,7 +91,7 @@ Places it in the position indicated by VLOCATE or in the last printed position.
 <tr><th>Output</th><td> --- </td></tr>
 <tr><th>Examples:</th>
 <td><pre>
-VLOCATE(3,4);<br/>
+VLOCATE(3,4);
 VPRINT("Alea iacta est");
 </pre></td></tr>
 </table>
@@ -136,8 +136,8 @@ VPRINT("Alea iacta est");
 <tr><th>Output</th><td> --- </td></tr>
 <tr><th>Examples:</th>
 <td><pre>
-unsigned int value=1234;<br/>
-char text[]="     ";<br/>
+unsigned int value=1234;
+char text[]="     ";
 num2Dec16(value, text);
 </pre></td></tr>
 </table>
