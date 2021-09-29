@@ -135,11 +135,11 @@ VPRINT("Alea iacta est");
 </td></tr>
 <tr><th>Output</th><td> --- </td></tr>
 <tr><th>Examples:</th>
-<td><code><pre>
+<td><pre><code>
 unsigned int value=1234;
 char text[]="     ";
 num2Dec16(value, text);
-</pre></code></td></tr>
+</code></pre></td></tr>
 </table>
 
 
