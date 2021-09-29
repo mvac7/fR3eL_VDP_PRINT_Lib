@@ -143,6 +143,11 @@ num2Dec16(value, text);
 </table>
 
 
+| num2Dec16: |
+| --- | 
+| 16-bit Integer to ASCII (adaptation of Baze code) |
+| Function |  num2Dec16(value, text)  |
+
 
 ## 4 How to use it
 
