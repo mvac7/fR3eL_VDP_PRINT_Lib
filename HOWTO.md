@@ -135,21 +135,13 @@ VPRINT("Alea iacta est");
 </td></tr>
 <tr><th>Output</th><td> --- </td></tr>
 <tr><th>Examples:</th>
-<td><pre>
+<td><code><pre>
 unsigned int value=1234;
 char text[]="     ";
 num2Dec16(value, text);
-</pre></td></tr>
+</pre></code></td></tr>
 </table>
 
-
-| num2Dec16: |
-| :-- | :-- | 
-| 16-bit Integer to ASCII (adaptation of Baze code) |
-| Function | **num2Dec16(value, text)**  |
-| Input | - value (unsigned int)  |
-|       | - *text (unsigned int) pointer to the string where the number is to be translated  |
-| Example: | ` unsigned int value=1234;<br/>char text[]="     ";<br/>num2Dec16(value, text); ` |
 
 
 
