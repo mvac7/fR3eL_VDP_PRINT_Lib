@@ -75,7 +75,7 @@ for the indicated screen position.
 - line (char) 0 - 23
 </td></tr>
 <tr><th>Output</th><td>[unsigned int] VRAM address</td></tr>
-<tr><th>Examples:</th>
+<tr><th>Example:</th>
 <td><code>VLOCATE(10,5);</code></td></tr>
 </table>
 
@@ -89,7 +89,7 @@ Places it in the position indicated by VLOCATE or in the last printed position.
 <tr><th>Function</th><td>VPRINT(text)</td></tr>
 <tr><th>Input</th><td>[char*] string</td></tr>
 <tr><th>Output</th><td> --- </td></tr>
-<tr><th>Examples:</th>
+<tr><th>Example:</th>
 <td><pre>
 VLOCATE(3,4);
 VPRINT("Alea iacta est");
@@ -106,7 +106,7 @@ VPRINT("Alea iacta est");
 - length (unsigned int) length of the string to print
 </td></tr>
 <tr><th>Output</th><td> --- </td></tr>
-<tr><th>Examples:</th>
+<tr><th>Example:</th>
 <td><code> VPRINTN("Alea iacta est",10);</code></td></tr>
 </table>
 
@@ -120,7 +120,7 @@ VPRINT("Alea iacta est");
 - [char] length
 </td></tr>
 <tr><th>Output</th><td> --- </td></tr>
-<tr><th>Examples:</th>
+<tr><th>Example:</th>
 <td><code>Save_ISR();</code></td></tr>
 </table>
 
@@ -134,12 +134,10 @@ VPRINT("Alea iacta est");
 - *text (unsigned int) pointer to the string where the number is to be translated
 </td></tr>
 <tr><th>Output</th><td> --- </td></tr>
-<tr><th>Examples:</th>
-<td><pre><code>
-unsigned int value=1234;
+<tr><th>Example:</th>
+<td><pre>unsigned int value=1234;
 char text[]="     ";
-num2Dec16(value, text);
-</code></pre></td></tr>
+num2Dec16(value, text);</pre></td></tr>
 </table>
 
 
