@@ -9,10 +9,15 @@
 ---
 ## Index
 
-- 1 Description
-- 2 Requirements
-- 3 Functions
-- 4 How to use it
+- [1 Description](#1-Description)
+- [2 Requirements](#2-Requirements)
+- [3 Functions](#3-Functions)
+   - [3.1 VLOCATE](#31-VLOCATE)
+   - [3.2 VPRINT](#32-VPRINT)
+   - [3.3 VPRINTN](#33-VPRINTN)
+   - [3.4 VPrintNumber](#34-VPrintNumber)
+   - [3.5 num2Dec16](#35-num2Dec16)
+- [4 How to use](#4-How-to-use)
 
 
 <br/>
@@ -37,7 +42,7 @@ This project is an Open Source library. You can add part or all of this code in 
 
 Use them for developing MSX applications using Small Device C Compiler (SDCC).
 
-In the source code (\examples), you can find applications for testing and learning purposes.
+In the source code `/examples`, you can find applications for testing and learning purposes.
 
 ![TEST_0000](https://raw.githubusercontent.com/mvac7/SDCC_VDP_PRINT_Lib/master/GFX/TEST_0000.png)
 
@@ -54,7 +59,7 @@ Enjoy it!
 
 - [Small Device C Compiler (SDCC) v4.1](http://sdcc.sourceforge.net/)
 - [Hex2bin v2.5](http://hex2bin.sourceforge.net/)
-- VDP TMS9918A SDCC Library (fR3eL) - [MSX-DOS/ROM](https://github.com/mvac7/SDCC_TMS9918A_Lib) - [MSX-ROM](https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib)
+- VDP TMS9918A SDCC Library (fR3eL) - [`MSX-DOS/ROM`](https://github.com/mvac7/SDCC_TMS9918A_Lib) - [`MSX-ROM`](https://github.com/mvac7/SDCC_TMS9918A_MSXROM_Lib)
 
 
 <br/>
@@ -62,6 +67,8 @@ Enjoy it!
 ---
 
 ## 3 Functions
+
+### 3.1 VLOCATE
 
 <table>
 <tr><th colspan=2 align="left">VLOCATE</th></tr>
@@ -80,6 +87,8 @@ for the indicated screen position.
 </table>
 
 
+### 3.2 VPRINT
+
 <table>
 <tr><th colspan=2 align="left">VPRINT</th></tr>
 <tr><td colspan="2">
@@ -90,60 +99,59 @@ Places it in the position indicated by VLOCATE or in the last printed position.
 <tr><th>Input</th><td>[char*] string</td></tr>
 <tr><th>Output</th><td> --- </td></tr>
 <tr><th>Example:</th>
-<td><pre>
+<td><code>
 VLOCATE(3,4);
 VPRINT("Alea iacta est");
-</pre></td></tr>
+</code></td></tr>
 </table>
 
 
+### 3.3 VPRINTN
+
 <table>
-<tr><th colspan=2 align="left">VPRINTN</th></tr>
-<tr><td colspan="2">Prints a character string with a limited length on the screen.</td></tr>
-<tr><th>Function</th><td>VPRINTN(text, length)</td></tr>
-<tr><th>Input</th><td>
-- text (char*) string<br/>
-- length (unsigned int) length of the string to print
-</td></tr>
-<tr><th>Output</th><td> --- </td></tr>
-<tr><th>Example:</th>
-<td><code> VPRINTN("Alea iacta est",10);</code></td></tr>
+<tr><th colspan=3 align="left">VPRINTN</th></tr>
+<tr><td colspan=3>Prints a character string with a limited length on the screen.</td></tr>
+<tr><th>Function</th><td colspan=2>VPRINTN(text, length)</td></tr>
+<tr><th rowspan=2>Input</th><td>text (char*)</td><td>string</td></tr>
+<tr><td>length (unsigned int)</td><td>length of the string to print</td></tr>
+<tr><th>Output</th><td colspan=2> --- </td></tr>
+<tr><th>Example:</th><td colspan=2><code>VPRINTN("Alea iacta est",10);</code></td></tr>
 </table>
 
 
+### 3.4 VPrintNumber
+
 <table>
-<tr><th colspan=2 align="left">VPrintNumber</th></tr>
-<tr><td colspan="2">Prints a number.</td></tr>
-<tr><th>Function</th><td>VPrintNumber(value, length)</td></tr>
-<tr><th>Input</th><td>
-- [unsigned int] or [char] value<br/>
-- [char] length
-</td></tr>
-<tr><th>Output</th><td> --- </td></tr>
-<tr><th>Example:</th>
-<td><code>Save_ISR();</code></td></tr>
+<tr><th colspan=3 align="left">VPrintNumber</th></tr>
+<tr><td colspan=3>Prints a number.</td></tr>
+<tr><th>Function</th><td colspan=2>VPrintNumber(value, length)</td></tr>
+<tr><th rowspan=2>Input</th><td>[unsigned int] or [char]</td><td>value</td></tr>
+<tr><td>[char]</td><td>length</td></tr>
+<tr><th>Output</th><td colspan=2> --- </td></tr>
+<tr><th>Example:</th><td colspan=2><code>Save_ISR();</code></td></tr>
 </table>
 
 
+### 3.5 num2Dec16
+
 <table>
-<tr><th colspan=2 align="left">num2Dec16</th></tr>
-<tr><td colspan="2">16-bit Integer to ASCII (adaptation of Baze code)</td></tr>
-<tr><th>Function</th><td>num2Dec16(value, text)</td></tr>
-<tr><th>Input</th><td>
-- value (unsigned int)<br/>  
-- *text (unsigned int) pointer to the string where the number is to be translated
-</td></tr>
-<tr><th>Output</th><td> --- </td></tr>
-<tr><th>Example:</th>
-<td><pre>unsigned int value=1234;
+<tr><th colspan=3 align="left">num2Dec16</th></tr>
+<tr><td colspan=3>16-bit Integer to ASCII (adaptation of Baze code)<br/>It is for internal use of the number printing functions.</td></tr>
+<tr><th>Function</th><td colspan=2>num2Dec16(value, text)</td></tr>
+<tr><th rowspan=2>Input</th><td>value (unsigned int)</td><td>value</td></tr>  
+<tr><td>text (unsigned int)</td><td>pointer to the string where the number is to be translated</td></tr>
+<tr><th>Output</th><td colspan=2> --- </td></tr>
+<tr><th>Example:</th><td colspan=2>
+<code>unsigned int value=1234;
 char text[]="     ";
-num2Dec16(value, text);</pre></td></tr>
+num2Dec16(value, text);</code>
+</td></tr>
 </table>
 
 
 
 
-## 4 How to use it
+## 4 How to use
 
 The library works in a similar way to the MSX BASIC `LOCATE` and `PRINT` instructions.
 
