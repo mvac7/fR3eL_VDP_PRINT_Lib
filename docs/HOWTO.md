@@ -64,7 +64,7 @@ Enjoy it!
 
 <table>
 <tr><th colspan=3 align="left">VLOCATE</th></tr>
-<tr><td colspan=3>Moves the cursor to the specified location and optionally provides the VRAM address from the pattern name table,<br/>
+<tr><td colspan=3>Moves the cursor to the specified location and optionally provides the<br/>VRAM address from the pattern name table,<br/>
 for the indicated screen position.</td></tr>
 <tr><th>Function</th><td colspan=2>VLOCATE(column, line)</td></tr>
 <tr><th rowspan=2>Input</th><td>[char]</td><td>column (0 - 31)</td></tr>
@@ -84,10 +84,10 @@ for the indicated screen position.</td></tr>
 <tr><th>Input</th><td>[char*]</td><td>string</td></tr>
 <tr><th>Output</th><td colspan=2> --- </td></tr>
 <tr><th>Example:</th>
-<td colspan=2><code>
+<td colspan=2><pre>
 VLOCATE(3,4);
 VPRINT("Alea iacta est");
-</code></td></tr>
+</pre></td></tr>
 </table>
 
 
@@ -128,11 +128,11 @@ VPRINT("Alea iacta est");
 <tr><td>text (unsigned int)</td><td>pointer to the string where the number is to be translated</td></tr>
 <tr><th>Output</th><td colspan=2> --- </td></tr>
 <tr><th>Example:</th>
-<td colspan=2><code>
+<td colspan=2><pre>
 unsigned int value=1234;
 char text[]="     ";
 num2Dec16(value, text);
-</code></td></tr>
+</pre></td></tr>
 </table>
 
 
