@@ -127,11 +127,12 @@ VPRINT("Alea iacta est");
 <tr><th rowspan=2>Input</th><td>value (unsigned int)</td><td>value</td></tr>  
 <tr><td>text (unsigned int)</td><td>pointer to the string where the number is to be translated</td></tr>
 <tr><th>Output</th><td colspan=2> --- </td></tr>
-<tr><th>Example:</th><td colspan=2>
-<code>unsigned int value=1234;
+<tr><th>Example:</th>
+<td colspan=2><code>
+unsigned int value=1234;
 char text[]="     ";
-num2Dec16(value, text);</code>
-</td></tr>
+num2Dec16(value, text);
+</code></td></tr>
 </table>
 
 
