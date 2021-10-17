@@ -1,12 +1,7 @@
 # How to use the VDP PRINT MSX SDCC Library
 
-
-### Sorry!: This text is pending correction of the English translation.
-
-
-<br/>
-
 ---
+
 ## Index
 
 - [1 Description](#1-Description)
@@ -38,13 +33,10 @@ I have adapted a routine for converting a 16 Bits value to ASCII, extracted from
   
 It is adapted to work with the standard MSX screen configurations but it can be changed to the VRAM addresses of other computers or video game consoles.
 
-This project is an Open Source library. You can add part or all of this code in your libraries/engines.
-
 Use them for developing MSX applications using Small Device C Compiler (SDCC).
 
-In the source code `/examples`, you can find applications for testing and learning purposes.
-
-![TEST_0000](https://raw.githubusercontent.com/mvac7/SDCC_VDP_PRINT_Lib/master/GFX/TEST_0000.png)
+This project is an Open Source library. 
+You can add part or all of this code in your application development or include it in other libraries/engines.
 
 This library is part of the [MSX fR3eL Project](https://github.com/mvac7/SDCC_MSX_fR3eL).
 
@@ -71,39 +63,33 @@ Enjoy it!
 ### 3.1 VLOCATE
 
 <table>
-<tr><th colspan=2 align="left">VLOCATE</th></tr>
-<tr><td colspan="2">
-Moves the cursor to the specified location and optionally provides the VRAM address from the pattern name table,<br/>
-for the indicated screen position.
-</td></tr>
-<tr><th>Function</th><td>VLOCATE(column, line)</td></tr>
-<tr><th>Input</th><td>
-- column (char) 0 - 31<br/>
-- line (char) 0 - 23
-</td></tr>
-<tr><th>Output</th><td>[unsigned int] VRAM address</td></tr>
-<tr><th>Example:</th>
-<td><code>VLOCATE(10,5);</code></td></tr>
+<tr><th colspan=3 align="left">VLOCATE</th></tr>
+<tr><td colspan=3>Moves the cursor to the specified location and optionally provides the VRAM address from the pattern name table,<br/>
+for the indicated screen position.</td></tr>
+<tr><th>Function</th><td colspan=2>VLOCATE(column, line)</td></tr>
+<tr><th rowspan=2>Input</th><td>[char]</td><td>column (0 - 31)</td></tr>
+<tr><td>[char]</td><td>line (0 - 23)</td></tr>
+<tr><th>Output</th><td>[unsigned int]</td><td>VRAM address</td></tr>
+<tr><th>Example:</th><td colspan=2><pre>VLOCATE(10,5);<br/>VPRINT("Hello World!");</pre></td></tr>
 </table>
+
 
 
 ### 3.2 VPRINT
 
 <table>
-<tr><th colspan=2 align="left">VPRINT</th></tr>
-<tr><td colspan="2">
-Prints a string of characters on the screen.<br/>
-Places it in the position indicated by VLOCATE or in the last printed position.
-</td></tr>
-<tr><th>Function</th><td>VPRINT(text)</td></tr>
-<tr><th>Input</th><td>[char*] string</td></tr>
-<tr><th>Output</th><td> --- </td></tr>
+<tr><th colspan=3 align="left">VPRINT</th></tr>
+<tr><td colspan=3>Prints a string of characters on the screen.<br/>Places it in the position indicated by VLOCATE or in the last printed position.</td></tr>
+<tr><th>Function</th><td colspan=2>VPRINT(text)</td></tr>
+<tr><th>Input</th><td>[char*]</td><td>string</td></tr>
+<tr><th>Output</th><td colspan=2> --- </td></tr>
 <tr><th>Example:</th>
-<td><code>
+<td colspan=2><code>
 VLOCATE(3,4);
 VPRINT("Alea iacta est");
 </code></td></tr>
 </table>
+
 
 
 ### 3.3 VPRINTN
