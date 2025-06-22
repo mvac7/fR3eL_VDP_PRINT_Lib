@@ -66,7 +66,7 @@ You can add part or all of this code in your application development or include 
 
 <table>
 <tr><th colspan=3 align="left">VLOCATE</th></tr>
-<tr><td colspan=3>Moves the cursor to the specified location and optionally provides the<br/>VRAM address from the pattern name table,<br/>
+<tr><td colspan=3>Moves the cursor to the specified location.<br/>
 for the indicated screen position.</td></tr>
 <tr><th>Function</th><td colspan=2>VLOCATE(column, line)</td></tr>
 <tr><th rowspan=2>Input</th><td>char</td><td>column (0 - 31)</td></tr>
@@ -80,6 +80,10 @@ for the indicated screen position.</td></tr>
 	VLOCATE(10,5);
 	VPRINT("Hello World!");
 ```
+
+| Note: |
+| :---  |
+| The VRAM address will be saved in the global variable `VPRINT_vaddr` |
 
 <br/>
 
@@ -145,7 +149,7 @@ for the indicated screen position.</td></tr>
 
 <table>
 <tr><th colspan=3 align="left">VPrintFNumber</th></tr>
-<tr><td colspan=3>Prints an unsigned integer on the screen with formatting parameters.</td></tr>
+<tr><td colspan=3>Prints a number on the screen with formatting parameters.</td></tr>
 <tr><th>Function</th><td colspan=2>VPrintFNumber(unsigned int value, char emptyChar, char length)</td></tr>
 <tr><th rowspan=2>Input</th><td>unsigned int or char</td><td>value</td></tr>
 <tr><td>char</td><td>emptyChar · Character used for the first empty digits.<br/>E.g: 0='', 32=' ', 48='0'</td></tr>
@@ -168,7 +172,7 @@ for the indicated screen position.</td></tr>
 
 <table>
 <tr><th colspan=3 align="left">num2Dec16</th></tr>
-<tr><td colspan=3>16-bit Integer to ASCII (adaptation of Baze code)<br/>It is for internal use of the number printing functions.</td></tr>
+<tr><td colspan=3>Converts a number to a String.</td></tr>
 <tr><th>Function</th><td colspan=2>num2Dec16(value, textParameters)</td></tr>
 <tr><th rowspan=2>Input</th><td>unsigned int</td><td>value = 8 or 16bits</td></tr>  
 <tr><td>unsigned int</td><td>textParameters = text parameters (emptyChar and length)<br/>(emptyChar<<8)+length</td></tr>
@@ -189,11 +193,9 @@ for the indicated screen position.</td></tr>
 | Note: |
 | :---  |
 | This function is intended for internal use. If you want to use it, be aware that the conversion to a string is written to the `VPRINT_ntext` variable. |
-
+| 16-bit Integer to ASCII (decimal) based on [num2Dec16](https://baze.sk/3sc/misc/z80bits.html#5.1) by baze |
 
 <br/>
-
-
 
 ## 4 How to use
 

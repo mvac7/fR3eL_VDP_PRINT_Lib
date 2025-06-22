@@ -60,3 +60,19 @@ Enjoy it!
 
 - [Small Device C Compiler (SDCC) v4.4](http://sdcc.sourceforge.net/)
 - [Hex2bin v2.5](http://hex2bin.sourceforge.net/)
+
+<br/>
+
+---
+
+## Functions
+
+| Name | Declaration | Description |
+| ---  | ---   | ---         |
+| VLOCATE  | `VLOCATE(char column, char line)` | Moves the cursor to the specified location |
+| VPRINT   | `VPRINT(char* text)` | Prints a string of characters on the screen |
+| VPRINTN  | `VPRINTN(char* text, unsigned int length)` | Prints a character string with a limited length on the screen |
+| VPrintNumber  | `VPrintNumber(unsigned int value)` | Prints a number |
+| VPrintFNumber | `VPrintFNumber(unsigned int value, char emptyChar, char length)` | Prints a number on the screen with formatting parameters |
+| num2Dec16     | `num2Dec16(unsigned int value, unsigned int textParameters)` | Converts a number to a String |
+

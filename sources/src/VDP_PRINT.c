@@ -41,9 +41,8 @@ char NUM2DEV_LENGTH;
 /* =============================================================================
 VLOCATE
 Description:
-		Moves the cursor to the specified location and optionally 
-		provides the VRAM address from the pattern name table, 
-		for the indicated screen position.
+		Moves the cursor to the specified location.
+		Note: The VRAM address will be saved in the global variable VPRINT_vaddr.
 Inputs:	column (char) 0 - 31
 		line   (char) 0 - 23
 Output:	-
@@ -125,7 +124,7 @@ void VPrintNumber(unsigned int value)
 /* =============================================================================
 PrintFNumber
 Description: 
-		Prints an unsigned integer on the screen with formatting parameters.
+		Prints a number on the screen with formatting parameters.
 	   
 Input:	(unsigned int or char) numeric value
 		(char) emptyChar · Character used for the first empty digits
@@ -159,9 +158,9 @@ __endasm;
 
 
 /* =============================================================================
-PrintNumber
+num2Dec16
 Description: 
-		Prints an unsigned integer on the screen.
+		Converts a number to a String.
 
 		16-bit Integer to ASCII (decimal) based on num2Dec16 by baze
 		https://baze.sk/3sc/misc/z80bits.html#5.1
