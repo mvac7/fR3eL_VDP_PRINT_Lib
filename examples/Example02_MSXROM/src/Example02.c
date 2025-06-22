@@ -52,7 +52,7 @@ char INKEY(void);
 
 
 // ---------------------------------------------------------------------------- Constants
-const char text01[] = "Test VDP_PRINT v1.4";
+const char text01[] = "Test VDP_PRINT v1.4 ROM";
 const char text02[] = "VDP_PRINT Library v1.4";
 
 

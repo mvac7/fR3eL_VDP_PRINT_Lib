@@ -60,7 +60,7 @@ void test(void);
 
 
 // ---------------------------------------------------------------------------- Constants
-const char text01[] = "Test v1.3";
+const char text01[] = "Test VDP_PRINT v1.3 MSXDOS";
 const char text02[] = "VDP_PRINT Library v1.4";
 
 

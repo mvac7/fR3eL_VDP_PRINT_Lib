@@ -15,8 +15,10 @@
    - [3.2 VPRINT](#32-VPRINT)
    - [3.3 VPRINTN](#33-VPRINTN)
    - [3.4 VPrintNumber](#34-VPrintNumber)
-   - [3.5 num2Dec16](#35-num2Dec16)
+   - [3.5 VPrintFNumber](#35-VPrintFNumber)
+   - [3.6 num2Dec16](#36-num2Dec16)
 - [4 How to use](#4-How-to-use)
+- [5 Code Example](#5-Code-Example)
 
 
 <br/>
@@ -26,14 +28,6 @@
 ## 1 Description
 
 Functions for display text strings in the graphic modes (Graphic1 and Graphic2) of the TMS9918A.
-
-It is designed to work in GRAPHIC 2 mode (Screen 2), although it works in GRAPHIC 1 mode (Screen 1).
-
-For GRAPHIC 1 mode you get the advantage of faster display, useful if used for game development. If you want to develop a text application, you will get more functionality with the TEXTMODE library.
-
-For it to work in GRAPHIC 2 mode (Screen 2) you will first need to dump a tileset with a text font, in tiles 32 to 90 for uppercase, or up to 122 if you need lowercase.
-
-I have adapted a routine for converting a 16 Bits value to ASCII, extracted from the Baze collection [`WEB`](http://baze.sk/3sc/misc/z80bits.html#5.1), for printing numbers. 
 
 You can use this library to develop applications for ROM, MSXBASIC or MSX-DOS environments, using the Small Device C Compiler [(SDCC)](http://sdcc.sourceforge.net/) cross compiler.
 
@@ -45,7 +39,6 @@ These libraries are part of the [MSX fR3eL Project](https://github.com/mvac7/SDC
 
 This project is open source under the [MIT license](LICENSE).
 You can add part or all of this code in your application development or include it in other libraries/engines.
-
 
 <br/>
 
@@ -197,16 +190,78 @@ for the indicated screen position.</td></tr>
 
 <br/>
 
+---
+
 ## 4 How to use
 
 The library works in a similar way to the MSX BASIC `LOCATE` and `PRINT` instructions.
 
-Before printing a text (`VPRINT` or `VPRINTN`) or a number (`VPrintNumber`), it is necessary to indicate the position on the screen with `VLOCATE`.
+Before printing a text (`VPRINT` or `VPRINTN`) or a number (`VPrintNumber` or `VPrintFNumber`), it is necessary to indicate the position on the screen with `VLOCATE`.
+
+```c
+	VLOCATE(10,2);
+	VPRINT("Mono no aware");
+```
 
 Several texts can be printed in a row, since their final position is preserved.
-   
 
-### Example:
+```c
+	VLOCATE(0,8);
+	VPRINT("The answer to everything:");
+	VPrintNumber(42);
+	VPRINT("<");
+```
+
+It is designed to work in GRAPHIC 2 mode (Screen 2), although it works in GRAPHIC 1 mode (Screen 1).
+For GRAPHIC 1 mode you get the advantage of faster display, useful if used for game development. If you want to develop a text application, you will get more functionality with the [TEXTMODE](https://github.com/mvac7/SDCC_TEXTMODE_MSXROM_Lib) library.
+
+For it to work in GRAPHIC 2 mode (Screen 2) you will first need to dump a tileset with a text font, in tiles 32 to 90 for uppercase, or up to 122 if you need lowercase.
+
+<br/>
+
+---
+
+## 5 Code Example
+
+In the following source code you can see a simple example of using the library. 
+
+You can find more extensive examples in the git project sources.
+
+<br/>
+
+### Example01.c
+
+In this source code you will find a simple example of how to use this library.
+
+Requires the following items:
+- Startup file for MSX 8/16K ROM [crt0_MSX816kROM4000](https://github.com/mvac7/SDCC_startup_MSX816kROM4000)
+- [VDP_TMS9918A_MSXBIOS Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib)
+- [VDP_SPRITES_MSXBIOS Library](https://github.com/mvac7/SDCC_VDP_SPRITES_MSXROM_Lib)
+
+<br/>
+
+And you need the following applications to compile and generate the final ROM:
+- [Small Device C Compiler (SDCC) v4.4](http://sdcc.sourceforge.net/)
+- [Hex2bin v2.5](http://hex2bin.sourceforge.net/)
+
+<br/>
+
+This example performs the following actions:
+1. Initializes the screen to Graphic2 mode (Screen 2).
+1. Clears the screen by filling the pattern name table with tile 0
+1. Fill in the color table so that the Tiles are displayed with white for the ink and blue for the background (0xF4). 
+1. Copy the tileset with the default font located in the BIOS to the VRAM.
+1. Places the cursor at position 0,0 on the screen and prints the text containing the string text01.
+1. Places the cursor at position 2,4
+1. 
+
+<br/>
+
+![Example screenshot](../examples/data/EXAMPLE1_01.png)
+
+<br/>
+
+#### Source Code:
 
 This example is illustrative only. 
 In the `examples\` folder of the project sources you will find a complete application where you can check the behavior of the library.
@@ -236,19 +291,21 @@ void main(void)
 	unsigned int ROMfont = *(unsigned int *) CGTABL;
 	unsigned int value = 1024;
 	
+//------------------------------------- init screen	
 	COLOR(15,4,5);
- 	SCREEN(GRAPHIC2);			// Set Screen 2
+ 	SCREEN(GRAPHIC2);	// Set Screen 2
 
-	FillVRAM(G2_MAP,0x300,0);			//Map
-	FillVRAM(G2_COL,0x1800,0xF4);		//Tileset colors
-	CopyToVRAM(ROMfont,G2_PAT_A,0x800);	//MSX font pattern
-	CopyToVRAM(ROMfont,G2_PAT_B,0x800);	//MSX font pattern
-	CopyToVRAM(ROMfont,G2_PAT_C,0x800);	//MSX font pattern
+	FillVRAM(G2_MAP,0x300,0);			//Fill Map (clear screen)
+	FillVRAM(G2_COL,0x1800,0xF4);		//Set Tileset colors
+	CopyToVRAM(ROMfont,G2_PAT_A,0x800);	//Set MSX font pattern at tileset BANK A
+	CopyToVRAM(ROMfont,G2_PAT_B,0x800);	//Set MSX font pattern at tileset BANK B
+	CopyToVRAM(ROMfont,G2_PAT_C,0x800);	//Set MSX font pattern at tileset BANK C
+//------------------------------------- END init screen
 	
-	VLOCATE(0,0);
-	VPRINT(text01);
+	VLOCATE(0,0);		//set cursor at the 0,0 position
+	VPRINT(text01);		//Print a text01
 
-	VLOCATE(0,2);
+	VLOCATE(2,4);		//set cursor at the 2,4 position
 	VPRINT("Number:");
 	VPrintNumber(value);
 	VPRINT("Bytes");
