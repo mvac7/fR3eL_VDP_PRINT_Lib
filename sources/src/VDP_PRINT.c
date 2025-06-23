@@ -1,9 +1,10 @@
 /* =============================================================================
-# VDP PRINT MSX Library (fR3eL Project) 
+# VDP_PRINT MSX Library (fR3eL Project) 
 
 - Version: 1.4 (20/06/2025)
 - Author: mvac7/303bcn
 - Architecture: MSX
+- Environment: ROM, MSXBASIC or MSX-DOS
 - Format: C Object (SDCC .rel)
 - Programming language: C and Z80 assembler
 - Compiler: SDCC 4.4 or newer 
@@ -12,8 +13,8 @@
 Functions Library for display text strings in the graphic modes of the 
 TMS9918A (G1 and G2).
 
-Includes a 16-bit integer to ASCII conversion routine, 
-based on num2Dec16 by baze
+NOTE: The function to convert a 16-bit value to ASCII (num2Dec16) is
+an adaptation of a routine included in Baze's Z80 routine collection.
 http://baze.sk/3sc/misc/z80bits.html#5.1
  
 ## History of versions (dd/mm/yyyy):

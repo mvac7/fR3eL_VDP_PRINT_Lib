@@ -20,7 +20,6 @@
 - [4 How to use](#4-How-to-use)
 - [5 Code Example](#5-Code-Example)
 
-
 <br/>
 
 ---
@@ -183,10 +182,10 @@ for the indicated screen position.</td></tr>
 	VPRINT(VPRINT_ntext);
 ```
 
-| Note: |
+| Notes: |
 | :---  |
 | This function is intended for internal use. If you want to use it, be aware that the conversion to a string is written to the `VPRINT_ntext` variable. |
-| 16-bit Integer to ASCII (decimal) based on [num2Dec16](https://baze.sk/3sc/misc/z80bits.html#5.1) by baze |
+| The function to convert a 16-bit value to ASCII (num2Dec16) is an adaptation of a routine included in [Baze's Z80 routine collection](https://baze.sk/3sc/misc/z80bits.html#5.1). |
 
 <br/>
 
@@ -223,20 +222,16 @@ For it to work in GRAPHIC 2 mode (Screen 2) you will first need to dump a tilese
 
 ## 5 Code Example
 
-In the following source code you can see a simple example of using the library. 
-
-You can find more extensive examples in the git project sources.
-
-<br/>
-
-### Example01.c
+### 5.1 Example01.c
 
 In this source code you will find a simple example of how to use this library.
 
+You can find the source code on the project's git.
+
 Requires the following items:
 - Startup file for MSX 8/16K ROM [crt0_MSX816kROM4000](https://github.com/mvac7/SDCC_startup_MSX816kROM4000)
-- [VDP_TMS9918A_MSXBIOS Library](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib)
-- [VDP_SPRITES_MSXBIOS Library](https://github.com/mvac7/SDCC_VDP_SPRITES_MSXROM_Lib)
+- [VDP_TMS9918A_MSXBIOS](https://github.com/mvac7/SDCC_VDP_TMS9918A_MSXROM_Lib) Library
+- [VDP_PRINT](https://github.com/mvac7/SDCC_VDP_SPRITES_MSXROM_Lib) Library
 
 <br/>
 
@@ -252,8 +247,7 @@ This example performs the following actions:
 1. Fill in the color table so that the Tiles are displayed with white for the ink and blue for the background (0xF4). 
 1. Copy the tileset with the default font located in the BIOS to the VRAM.
 1. Places the cursor at position 0,0 on the screen and prints the text containing the string text01.
-1. Places the cursor at position 2,4
-1. 
+1. Places the cursor at position 2,4. Print a String+Number+String.
 
 <br/>
 
@@ -322,7 +316,7 @@ To obtain a binary with the ROM of the example program, execute the following st
 
 1. Compile with SDCC
 
-```
+```systemd
 sdcc -mz80 --code-loc 0x4020 --data-loc 0xC000 --use-stdout --no-std-crt0 crt0_MSX816kROM4000.rel VDP_TMS9918A_MSXBIOS.rel VDP_PRINT.rel Example01.c
 ```
 
@@ -330,7 +324,7 @@ sdcc -mz80 --code-loc 0x4020 --data-loc 0xC000 --use-stdout --no-std-crt0 crt0_M
 
 2. If the compiler has not displayed an error then convert the .ihx file to binary with hex2bin
 
-```
+```console
 hex2bin -e bin -l 2000 Example01.ihx
 ```
 
@@ -338,7 +332,7 @@ hex2bin -e bin -l 2000 Example01.ihx
 
 3. Rename the binary to .ROM
 
-```
+```console
 rename Example01.bin EXAMPLE1.ROM
 ```
 

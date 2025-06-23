@@ -20,8 +20,6 @@ For GRAPHIC 1 mode you get the advantage of faster display, useful if used for g
 
 For it to work in GRAPHIC 2 mode (Screen 2) you will first need to dump a tileset with a text font, in tiles 32 to 90 for uppercase, or up to 122 if you need lowercase.
 
-I have adapted a routine for converting a 16 Bits value to ASCII, extracted from the Baze collection [`WEB`](http://baze.sk/3sc/misc/z80bits.html#5.1), for printing numbers. 
-
 You can use this library to develop applications for ROM, MSXBASIC or MSX-DOS environments, using the Small Device C Compiler [(SDCC)](http://sdcc.sourceforge.net/) cross compiler.
 
 Requires the `VDP_TMS9918A` Library to write to the VRAM and so that you can start the graphics modes.
@@ -36,6 +34,12 @@ This project is open source under the [MIT license](LICENSE).
 You can add part or all of this code in your application development or include it in other libraries/engines.
 
 Enjoy it!
+
+<br/>
+
+| Note: |
+| :---  |
+| The function to convert a 16-bit value to ASCII (num2Dec16) is an adaptation of a routine included in [Baze's Z80 routine collection](https://baze.sk/3sc/misc/z80bits.html#5.1). |
 
 <br/>
 
@@ -99,7 +103,7 @@ Example included in the HOWTO document.
 
 ### Example 2 (ROM)
 
-Example where the Sprite functions included in the VDP_TMS9918A and VDP_SPRITES libraries are tested.
+Example where the Sprite functions included in the VDP_TMS9918A and VDP_PRINT libraries are tested.
 
 [`examples/Example02`](examples/Example02)
 
@@ -109,7 +113,7 @@ Example where the Sprite functions included in the VDP_TMS9918A and VDP_SPRITES 
 
 ### Example 3 (MSX-DOS)
 
-Example where the Sprite functions included in the VDP_TMS9918A and VDP_SPRITES libraries are tested.
+Example where the Sprite functions included in the VDP_TMS9918A and VDP_PRINT libraries are tested.
 
 [`examples/Example03`](examples/Example03)
 
