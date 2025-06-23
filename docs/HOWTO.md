@@ -211,10 +211,11 @@ Several texts can be printed in a row, since their final position is preserved.
 	VPRINT("<");
 ```
 
-It is designed to work in GRAPHIC 2 mode (Screen 2), although it works in GRAPHIC 1 mode (Screen 1).
-For GRAPHIC 1 mode you get the advantage of faster display, useful if used for game development. If you want to develop a text application, you will get more functionality with the [TEXTMODE](https://github.com/mvac7/SDCC_TEXTMODE_MSXROM_Lib) library.
+It is designed to work in GRAPHIC2 mode (Screen 2), although it works in GRAPHIC1 mode (Screen 1).
+For GRAPHIC1 mode you get the advantage of faster display, useful if used for game development. If you want to develop a text application, you will get more functionality with the [TEXTMODE](https://github.com/mvac7/SDCC_TEXTMODE_MSXROM_Lib) library.
 
-For it to work in GRAPHIC 2 mode (Screen 2) you will first need to dump a tileset with a text font, in tiles 32 to 90 for uppercase, or up to 122 if you need lowercase.
+For proper operation in GRAPHIC2 mode (Screen 2), you must first dump a tileset with a text font into all three VRAM banks (patterns and colors). 
+The minimum tile ranges to comply with the ASCII standard must be 32 to 90 for uppercase letters, or 122 if lowercase letters are required.
 
 <br/>
 
@@ -245,20 +246,17 @@ This example performs the following actions:
 1. Initializes the screen to Graphic2 mode (Screen 2).
 1. Clears the screen by filling the pattern name table with tile 0
 1. Fill in the color table so that the Tiles are displayed with white for the ink and blue for the background (0xF4). 
-1. Copy the tileset with the default font located in the BIOS to the VRAM.
-1. Places the cursor at position 0,0 on the screen and prints the text containing the string text01.
+1. Copies the tileset with the BIOS system font to the three banks of the Pattern Table in VRAM.
+1. Places the cursor at position 0,0 on the screen and prints the text contained in text01.
 1. Places the cursor at position 2,4. Print a String+Number+String.
 
 <br/>
 
-![Example screenshot](../examples/data/EXAMPLE1_01.png)
+![Example screenshot](../docs/pics/EXAMPLE01_01.png)
 
 <br/>
 
 #### Source Code:
-
-This example is illustrative only. 
-In the `examples\` folder of the project sources you will find a complete application where you can check the behavior of the library.
 
 ```c
 /* =============================================================================
@@ -316,7 +314,7 @@ To obtain a binary with the ROM of the example program, execute the following st
 
 1. Compile with SDCC
 
-```systemd
+```
 sdcc -mz80 --code-loc 0x4020 --data-loc 0xC000 --use-stdout --no-std-crt0 crt0_MSX816kROM4000.rel VDP_TMS9918A_MSXBIOS.rel VDP_PRINT.rel Example01.c
 ```
 
@@ -324,7 +322,7 @@ sdcc -mz80 --code-loc 0x4020 --data-loc 0xC000 --use-stdout --no-std-crt0 crt0_M
 
 2. If the compiler has not displayed an error then convert the .ihx file to binary with hex2bin
 
-```console
+```
 hex2bin -e bin -l 2000 Example01.ihx
 ```
 
@@ -332,7 +330,7 @@ hex2bin -e bin -l 2000 Example01.ihx
 
 3. Rename the binary to .ROM
 
-```console
+```
 rename Example01.bin EXAMPLE1.ROM
 ```
 

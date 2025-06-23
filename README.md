@@ -16,9 +16,6 @@
 Functions for display text strings in the graphic modes (Graphic1 and Graphic2) of the TMS9918A.
 
 It is designed to work in GRAPHIC 2 mode (Screen 2), although it works in GRAPHIC 1 mode (Screen 1).
-For GRAPHIC 1 mode you get the advantage of faster display, useful if used for game development. If you want to develop a text application, you will get more functionality with the [TEXTMODE](https://github.com/mvac7/SDCC_TEXTMODE_MSXROM_Lib) library.
-
-For it to work in GRAPHIC 2 mode (Screen 2) you will first need to dump a tileset with a text font, in tiles 32 to 90 for uppercase, or up to 122 if you need lowercase.
 
 You can use this library to develop applications for ROM, MSXBASIC or MSX-DOS environments, using the Small Device C Compiler [(SDCC)](http://sdcc.sourceforge.net/) cross compiler.
 
@@ -75,9 +72,9 @@ Enjoy it!
 | VLOCATE  | `VLOCATE(char column, char line)` | Moves the cursor to the specified location |
 | VPRINT   | `VPRINT(char* text)` | Prints a string of characters on the screen |
 | VPRINTN  | `VPRINTN(char* text, unsigned int length)` | Prints a character string with a limited length on the screen |
-| VPrintNumber  | `VPrintNumber(unsigned int value)` | Prints a number |
+| VPrintNumber  | `VPrintNumber(unsigned int value)`    | Prints a number |
 | VPrintFNumber | `VPrintFNumber(unsigned int value, char emptyChar, char length)` | Prints a number on the screen with formatting parameters |
-| num2Dec16     | `num2Dec16(unsigned int value, unsigned int textParameters)` | Converts a number to a String |
+| num2Dec16     | `num2Dec16(unsigned int value, unsigned int textParameters)`     | Converts a number to a String |
 
 <br/>
 
@@ -97,24 +94,24 @@ Example included in the HOWTO document.
 
 [`examples/Example01`](examples/Example01)
 
-![Example screenshot](examples/data/EXAMPLE01_01.png) 
+![Example screenshot](docs/pics/EXAMPLE01_01.png) 
 
 <br/>
 
 ### Example 2 (ROM)
 
-Example where the Sprite functions included in the VDP_TMS9918A and VDP_PRINT libraries are tested.
+Example where all the functions of the VDP_PRINT library are tested in the ROM environment.
 
 [`examples/Example02`](examples/Example02)
 
-![Example screenshot](examples/data/EXAMPLE02_01.png) 
+![Example screenshot](docs/pics/EXAMPLE02_01.png) 
 
 <br/>
 
 ### Example 3 (MSX-DOS)
 
-Example where the Sprite functions included in the VDP_TMS9918A and VDP_PRINT libraries are tested.
+Example where all the functions of the VDP_PRINT library are tested in the MSX-DOS environment.
 
 [`examples/Example03`](examples/Example03)
 
-![Example screenshot](examples/data/EXAMPLE03_01.png) 
+![Example screenshot](docs/pics/EXAMPLE03_01.png) 
