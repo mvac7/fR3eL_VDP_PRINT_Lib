@@ -26,7 +26,7 @@
 
 ## 1 Description
 
-Functions for display text strings in the graphic modes (Graphic1 and Graphic2) of the TMS9918A.
+C function library for displaying text strings in TMS9918A graphics modes (Graphic1 and Graphic2).
 
 You can use this library to develop applications for ROM, MSXBASIC or MSX-DOS environments, using the Small Device C Compiler [(SDCC)](http://sdcc.sourceforge.net/) cross compiler.
 

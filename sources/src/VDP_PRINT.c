@@ -10,8 +10,8 @@
 - Compiler: SDCC 4.4 or newer 
 
 ## Description:
-Functions Library for display text strings in the graphic modes of the 
-TMS9918A (G1 and G2).
+C function library for displaying text strings in TMS9918A graphics modes 
+(Graphic1 and Graphic2).
 
 NOTE: The function to convert a 16-bit value to ASCII (num2Dec16) is
 an adaptation of a routine included in Baze's Z80 routine collection.
