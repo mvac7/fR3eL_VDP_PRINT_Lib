@@ -15,13 +15,13 @@
 
 Functions for display text strings in the graphic modes (Graphic1 and Graphic2) of the TMS9918A.
 
-It is designed to work in GRAPHIC 2 mode (Screen 2), although it works in GRAPHIC 1 mode (Screen 1).
+It is designed to work in GRAPHIC2 mode (Screen 2), although it works in GRAPHIC1 mode (Screen 1).
 
 You can use this library to develop applications for ROM, MSXBASIC or MSX-DOS environments, using the Small Device C Compiler [(SDCC)](http://sdcc.sourceforge.net/) cross compiler.
 
 Requires the `VDP_TMS9918A` Library to write to the VRAM and so that you can start the graphics modes.
-- for ROM and MSX BASIC [VDP_TMS9918A_MSXBIOS](https://github.com/mvac7/fR3eL_VDP_TMS9918A_MSXBIOS_Lib) Library.
-- for all environments [VDP_TMS9918A](https://github.com/mvac7/SDCC_TMS9918A_Lib) Library.
+- for all environments [VDP_TMS9918A](https://github.com/mvac7/SDCC_TMS9918A_Lib) Library. (Fast but takes up more space).
+- for only ROM and MSX BASIC (Use BIOS) [VDP_TMS9918A_MSXBIOS](https://github.com/mvac7/fR3eL_VDP_TMS9918A_MSXBIOS_Lib) Library. (Small but slow).
 
 You can access the documentation here with [`How to use the library`](docs/HOWTO.md).
 
@@ -69,12 +69,12 @@ Enjoy it!
 
 | Name | Declaration | Description |
 | :--- | :---        | :---        |
-| VLOCATE  | `VLOCATE(char column, char line)` | Moves the cursor to the specified location |
-| VPRINT   | `VPRINT(char* text)` | Prints a string of characters on the screen |
-| VPRINTN  | `VPRINTN(char* text, unsigned int length)` | Prints a character string with a limited length on the screen |
-| VPrintNumber  | `VPrintNumber(unsigned int value)`    | Prints a number |
-| VPrintFNumber | `VPrintFNumber(unsigned int value, char emptyChar, char length)` | Prints a number on the screen with formatting parameters |
-| num2Dec16     | `num2Dec16(unsigned int value, unsigned int textParameters)`     | Converts a number to a String |
+| VLOCATE  | `VLOCATE(column, line)` | Moves the cursor to the specified location |
+| VPRINT   | `VPRINT(text)` | Prints a string of characters on the screen |
+| VPRINTN  | `VPRINTN(text, length)` | Prints a character string with a limited length on the screen |
+| VPrintNumber  | `VPrintNumber(value)`    | Prints a number (char or unsigned int) |
+| VPrintFNumber | `VPrintFNumber(value, emptyChar, length)` | Prints a number on the screen with formatting parameters |
+| num2Dec16     | `num2Dec16(value, textParameters)`     | Converts a number to a String |
 
 <br/>
 

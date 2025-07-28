@@ -31,8 +31,8 @@ Functions for display text strings in the graphic modes (Graphic1 and Graphic2) 
 You can use this library to develop applications for ROM, MSXBASIC or MSX-DOS environments, using the Small Device C Compiler [(SDCC)](http://sdcc.sourceforge.net/) cross compiler.
 
 Requires the `VDP_TMS9918A` Library to write to the VRAM and so that you can start the graphics modes.
-- for ROM and MSX BASIC [VDP_TMS9918A_MSXBIOS](https://github.com/mvac7/fR3eL_VDP_TMS9918A_MSXBIOS_Lib) Library.
-- for all environments [VDP_TMS9918A](https://github.com/mvac7/SDCC_TMS9918A_Lib) Library.
+- for all environments [VDP_TMS9918A](https://github.com/mvac7/SDCC_TMS9918A_Lib) Library. (Fast but takes up more space).
+- for only ROM and MSX BASIC (Use BIOS) [VDP_TMS9918A_MSXBIOS](https://github.com/mvac7/fR3eL_VDP_TMS9918A_MSXBIOS_Lib) Library. (Small but slow).
 
 These libraries are part of the [MSX fR3eL Project](https://github.com/mvac7/SDCC_MSX_fR3eL).
 
@@ -142,7 +142,7 @@ for the indicated screen position.</td></tr>
 <table>
 <tr><th colspan=3 align="left">VPrintFNumber</th></tr>
 <tr><td colspan=3>Prints a number on the screen with formatting parameters.</td></tr>
-<tr><th>Function</th><td colspan=2>VPrintFNumber(unsigned int value, char emptyChar, char length)</td></tr>
+<tr><th>Function</th><td colspan=2>VPrintFNumber(value, emptyChar, length)</td></tr>
 <tr><th rowspan=2>Input</th><td>unsigned int or char</td><td>value</td></tr>
 <tr><td>char</td><td>emptyChar · Character used for the first empty digits.<br/>E.g: 0='', 32=' ', 48='0'</td></tr>
 <tr><td>char</td><td>length (1-5)</td></tr>
